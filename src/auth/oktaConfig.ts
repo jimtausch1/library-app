@@ -1,6 +1,6 @@
 export const oktaConfig = {
-  clientId: '1115VNYnMQk7qlHyGAI7v0a9TlYQCHUK',
-  issuer: 'https://dev-l625782tnvb0qtsd.us.auth0.com/oauth2/default',
+  clientId: '0oaiwdl2a6TQSgskn5d7',
+  issuer: 'https://dev-01109378.okta.com/oauth2/default',
   redirectUri: 'http://localhost:3000/login/callback',
   scopes: ['openid', 'profile', 'email'],
   pkce: true,
