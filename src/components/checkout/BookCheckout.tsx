@@ -1,15 +1,16 @@
 'use client';
 
-import BookModel from "@/models/BookModel";
-import ReviewModel from "@/models/ReviewModel";
-import ReviewRequestModel from "@/models/ReviewRequestModel";
-import { useUser } from "@auth0/nextjs-auth0/client";
+import BookModel from '@/models/BookModel';
+import ReviewModel from '@/models/ReviewModel';
+import ReviewRequestModel from '@/models/ReviewRequestModel';
+import { useUser } from '@auth0/nextjs-auth0/client';
 import { useParams } from 'next/navigation';
-import { useEffect, useState } from "react";
-import { SpinnerLoading } from "../utils/SpinnerLoading";
-import StarsReview from "../utils/StarsReview";
-import CheckoutAndReviewBox from "./CheckoutAndReviewBox";
-import { LatestReviews } from "./LatestReviews";
+import { useEffect, useState } from 'react';
+import { SpinnerLoading } from '../utils/SpinnerLoading';
+import StarsReview from '../utils/StarsReview';
+import CheckoutAndReviewBox from './CheckoutAndReviewBox';
+import { LatestReviews } from './LatestReviews';
+import Image from 'next/image';
 
 export default function BookCheckout() {
   const { user } = useUser();
@@ -18,7 +19,7 @@ export default function BookCheckout() {
   const [httpError, setHttpError] = useState(null);
 
   // Review State
-  const [reviews, setReviews] = useState<ReviewModel[]>([])
+  const [reviews, setReviews] = useState<ReviewModel[]>([]);
   const [totalStars, setTotalStars] = useState(0);
   const [isLoadingReview, setIsLoadingReview] = useState(true);
 
@@ -27,13 +28,14 @@ export default function BookCheckout() {
 
   // Loans Count State
   const [currentLoansCount, setCurrentLoansCount] = useState(0);
-  const [isLoadingCurrentLoansCount, setIsLoadingCurrentLoansCount] = useState(true);
+  const [isLoadingCurrentLoansCount, setIsLoadingCurrentLoansCount] =
+    useState(true);
 
   // Is Book Check Out?
   const [isCheckedOut, setIsCheckedOut] = useState(false);
   const [isLoadingBookCheckedOut, setIsLoadingBookCheckedOut] = useState(true);
 
-  const params = useParams<{ id: string; }>();
+  const params = useParams<{ id: string }>();
 
   const isAuthenticated = user !== undefined;
 
@@ -66,7 +68,7 @@ export default function BookCheckout() {
     fetchBook().catch((error: any) => {
       setIsLoadingBook(false);
       setHttpError(error.message);
-    })
+    });
   }, [isCheckedOut, params.id]);
 
   useEffect(() => {
@@ -100,7 +102,9 @@ export default function BookCheckout() {
       }
 
       if (loadedReviews) {
-        const round = (Math.round((weightedStarReviews / loadedReviews.length) * 2) / 2).toFixed(1);
+        const round = (
+          Math.round((weightedStarReviews / loadedReviews.length) * 2) / 2
+        ).toFixed(1);
         setTotalStars(Number(round));
       }
 
@@ -111,7 +115,7 @@ export default function BookCheckout() {
     fetchBookReviews().catch((error: any) => {
       setIsLoadingReview(false);
       setHttpError(error.message);
-    })
+    });
   }, [isReviewLeft, params.id]);
 
   useEffect(() => {
@@ -125,35 +129,40 @@ export default function BookCheckout() {
         setIsReviewLeft(userReviewResponseJson);
       }
       setIsLoadingUserReview(false);
-    }
+    };
     fetchUserReviewBook().catch((error: any) => {
       setIsLoadingUserReview(false);
       setHttpError(error.message);
-    })
+    });
   }, [isAuthenticated, params.id]);
 
   useEffect(() => {
     const fetchUserCurrentLoansCount = async () => {
       if (isAuthenticated) {
-        const currentLoansCountResponse = await fetch(`/api/secure/current-loans`);
+        const currentLoansCountResponse = await fetch(
+          `/api/secure/current-loans`,
+        );
         if (!currentLoansCountResponse.ok) {
           throw new Error('Something went wrong!');
         }
-        const currentLoansCountResponseJson = await currentLoansCountResponse.json();
+        const currentLoansCountResponseJson =
+          await currentLoansCountResponse.json();
         setCurrentLoansCount(currentLoansCountResponseJson);
       }
       setIsLoadingCurrentLoansCount(false);
-    }
+    };
     fetchUserCurrentLoansCount().catch((error: any) => {
       setIsLoadingCurrentLoansCount(false);
       setHttpError(error.message);
-    })
+    });
   }, [isAuthenticated, isCheckedOut]);
 
   useEffect(() => {
     const fetchUserCheckedOutBook = async () => {
       if (isAuthenticated) {
-        const bookCheckedOut = await fetch(`/api/secure/checked-out/${params.id}`);;
+        const bookCheckedOut = await fetch(
+          `/api/secure/checked-out/${params.id}`,
+        );
 
         if (!bookCheckedOut.ok) {
           throw new Error('Something went wrong!');
@@ -163,25 +172,29 @@ export default function BookCheckout() {
         setIsCheckedOut(bookCheckedOutResponseJson);
       }
       setIsLoadingBookCheckedOut(false);
-    }
+    };
     fetchUserCheckedOutBook().catch((error: any) => {
       setIsLoadingBookCheckedOut(false);
       setHttpError(error.message);
-    })
+    });
   }, [isAuthenticated, params.id]);
 
-  if (isLoadingBook || isLoadingReview || isLoadingCurrentLoansCount || isLoadingBookCheckedOut || isLoadingUserReview) {
-    return (
-      <SpinnerLoading />
-    )
+  if (
+    isLoadingBook ||
+    isLoadingReview ||
+    isLoadingCurrentLoansCount ||
+    isLoadingBookCheckedOut ||
+    isLoadingUserReview
+  ) {
+    return <SpinnerLoading />;
   }
 
   if (httpError) {
     return (
-      <div className='container m-5'>
+      <div className="container m-5">
         <p>{httpError}</p>
       </div>
-    )
+    );
   }
 
   async function checkoutBook() {
@@ -190,8 +203,8 @@ export default function BookCheckout() {
       method: 'PUT',
       headers: {
         // Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
     };
     const checkoutResponse = await fetch(url, requestOptions);
     if (!checkoutResponse.ok) {
@@ -206,15 +219,19 @@ export default function BookCheckout() {
       bookId = book.id;
     }
 
-    const reviewRequestModel = new ReviewRequestModel(starInput, bookId, reviewDescription);
+    const reviewRequestModel = new ReviewRequestModel(
+      starInput,
+      bookId,
+      reviewDescription,
+    );
     const url = `http://localhost:8080/api/reviews/secure`;
     const requestOptions = {
       method: 'POST',
       headers: {
         // Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(reviewRequestModel)
+      body: JSON.stringify(reviewRequestModel),
     };
     const returnResponse = await fetch(url, requestOptions);
     if (!returnResponse.ok) {
@@ -225,51 +242,74 @@ export default function BookCheckout() {
 
   return (
     <div>
-      <div className='container d-none d-lg-block'>
-        <div className='row mt-5'>
-          <div className='col-sm-2 col-md-2'>
-            {book?.img ?
-              <img src={book?.img} width='226' height='349' alt='Book' />
-              :
-              <img src='../../images/BooksImages/book-luv2code-1000.png' width='226'
-                height='349' alt='Book' />
-            }
+      <div className="container d-none d-lg-block">
+        <div className="row mt-5">
+          <div className="col-sm-2 col-md-2">
+            {book?.img ? (
+              // <img src={book?.img} width='226' height='349' alt='Book' />
+              <Image src={book?.img} width="226" height="349" alt="Book" />
+            ) : (
+              <Image
+                src="../../images/BooksImages/book-luv2code-1000.png"
+                width="226"
+                height="349"
+                alt="Book"
+              />
+            )}
           </div>
-          <div className='col-4 col-md-4 container'>
-            <div className='ml-2'>
+          <div className="col-4 col-md-4 container">
+            <div className="ml-2">
               <h2>{book?.title}</h2>
-              <h5 className='text-primary'>{book?.author}</h5>
-              <p className='lead'>{book?.description}</p>
+              <h5 className="text-primary">{book?.author}</h5>
+              <p className="lead">{book?.description}</p>
               <StarsReview rating={totalStars} size={32} />
             </div>
           </div>
-          <CheckoutAndReviewBox book={book} mobile={false} currentLoansCount={currentLoansCount}
-            isAuthenticated={isAuthenticated} isCheckedOut={isCheckedOut}
-            checkoutBook={checkoutBook} isReviewLeft={isReviewLeft} submitReview={submitReview} />
+          <CheckoutAndReviewBox
+            book={book}
+            mobile={false}
+            currentLoansCount={currentLoansCount}
+            isAuthenticated={isAuthenticated}
+            isCheckedOut={isCheckedOut}
+            checkoutBook={checkoutBook}
+            isReviewLeft={isReviewLeft}
+            submitReview={submitReview}
+          />
         </div>
         <hr />
         <LatestReviews reviews={reviews} bookId={book?.id} mobile={false} />
       </div>
-      <div className='container d-lg-none mt-5'>
-        <div className='d-flex justify-content-center alighn-items-center'>
-          {book?.img ?
-            <img src={book?.img} width='226' height='349' alt='Book' />
-            :
-            <img src='../../Images/BooksImages/book-luv2code-1000.png' width='226'
-              height='349' alt='Book' />
-          }
+      <div className="container d-lg-none mt-5">
+        <div className="d-flex justify-content-center alighn-items-center">
+          {book?.img ? (
+            <Image src={book?.img} width="226" height="349" alt="Book" />
+          ) : (
+            <Image
+              src="../../Images/BooksImages/book-luv2code-1000.png"
+              width="226"
+              height="349"
+              alt="Book"
+            />
+          )}
         </div>
-        <div className='mt-4'>
-          <div className='ml-2'>
+        <div className="mt-4">
+          <div className="ml-2">
             <h2>{book?.title}</h2>
-            <h5 className='text-primary'>{book?.author}</h5>
-            <p className='lead'>{book?.description}</p>
+            <h5 className="text-primary">{book?.author}</h5>
+            <p className="lead">{book?.description}</p>
             <StarsReview rating={totalStars} size={32} />
           </div>
         </div>
-        <CheckoutAndReviewBox book={book} mobile={true} currentLoansCount={currentLoansCount}
-          isAuthenticated={isAuthenticated} isCheckedOut={isCheckedOut}
-          checkoutBook={checkoutBook} isReviewLeft={isReviewLeft} submitReview={submitReview} />
+        <CheckoutAndReviewBox
+          book={book}
+          mobile={true}
+          currentLoansCount={currentLoansCount}
+          isAuthenticated={isAuthenticated}
+          isCheckedOut={isCheckedOut}
+          checkoutBook={checkoutBook}
+          isReviewLeft={isReviewLeft}
+          submitReview={submitReview}
+        />
         <hr />
         <LatestReviews reviews={reviews} bookId={book?.id} mobile={true} />
       </div>
