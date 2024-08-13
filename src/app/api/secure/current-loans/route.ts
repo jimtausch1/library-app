@@ -1,12 +1,10 @@
-import { cookies } from "next/headers";
-import { NextRequest } from "next/server";
+import { getAccessToken } from "@auth0/nextjs-auth0";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function GET(req: NextRequest, { params }: { params: { id: string } }, res: NextResponse) {
   try {
-    const headersList = cookies();
-    const accessToken = headersList.get("appSession")?.value;
-    // console.log(`accessToken is ${accessToken}`);
-    const url = `http://localhost:8080/api/books/secure/currentloans/count`;
+    const { accessToken } = await getAccessToken(req, res);   
+    const url = `http://localhost:8080/api/books/secure/currentloancount`;
     const requestOptions = {
       method: 'GET',
       headers: {

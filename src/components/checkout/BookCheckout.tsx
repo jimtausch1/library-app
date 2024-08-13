@@ -67,7 +67,7 @@ export default function BookCheckout() {
       setIsLoadingBook(false);
       setHttpError(error.message);
     })
-  }, [isCheckedOut]);
+  }, [isCheckedOut, params.id]);
 
   useEffect(() => {
     const fetchBookReviews = async () => {
@@ -112,7 +112,7 @@ export default function BookCheckout() {
       setIsLoadingReview(false);
       setHttpError(error.message);
     })
-  }, [isReviewLeft]);
+  }, [isReviewLeft, params.id]);
 
   useEffect(() => {
     const fetchUserReviewBook = async () => {
@@ -130,7 +130,7 @@ export default function BookCheckout() {
       setIsLoadingUserReview(false);
       setHttpError(error.message);
     })
-  }, [isAuthenticated]);
+  }, [isAuthenticated, params.id]);
 
   useEffect(() => {
     const fetchUserCurrentLoansCount = async () => {
@@ -168,7 +168,7 @@ export default function BookCheckout() {
       setIsLoadingBookCheckedOut(false);
       setHttpError(error.message);
     })
-  }, [isAuthenticated]);
+  }, [isAuthenticated, params.id]);
 
   if (isLoadingBook || isLoadingReview || isLoadingCurrentLoansCount || isLoadingBookCheckedOut || isLoadingUserReview) {
     return (
@@ -185,7 +185,7 @@ export default function BookCheckout() {
   }
 
   async function checkoutBook() {
-    const url = `http://localhost:8080/api/books/secure/checkout/?bookId=${book?.id}`;
+    const url = `http://localhost:8080/api/books/secure/checkout?bookId=${book?.id}`;
     const requestOptions = {
       method: 'PUT',
       headers: {
