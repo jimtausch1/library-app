@@ -198,15 +198,7 @@ export default function BookCheckout() {
   }
 
   async function checkoutBook() {
-    const url = `http://localhost:8080/api/books/secure/checkout?bookId=${book?.id}`;
-    const requestOptions = {
-      method: 'PUT',
-      headers: {
-        // Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-    };
-    const checkoutResponse = await fetch(url, requestOptions);
+    const checkoutResponse = await fetch(`/api/secure/check-out/${params.id}`);
     if (!checkoutResponse.ok) {
       throw new Error('Something went wrong!');
     }
