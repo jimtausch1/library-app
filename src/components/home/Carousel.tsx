@@ -67,7 +67,7 @@ const Carousel = () => {
   return (
     <div className="container mt-5" style={{ height: 550 }}>
       <div className="homepage-carousel-title">
-        <h3>Find your next @ldquo;I stayed up too late reading@ldquo; book.</h3>
+        <h3>Find your next &ldquo;I stayed up too late reading&ldquo; book.</h3>
       </div>
       <div
         id="carouselExampleControls"

@@ -11,11 +11,11 @@ const LibraryServices = () => {
       <div className="row p-4 align-items-center border shadow-lg">
         <div className="col-lg-7 p-3">
           <h1 className="display-4 fw-bold">
-            Can@ldsquo;t find what you are looking for?
+            Can&ldsquo;t find what you are looking for?
           </h1>
           <p className="lead">
             If you cannot find what you are looking for, send our library
-            adminldsquo;s a personal message!
+            admin&ldsquo;s a personal message!
           </p>
           <div className="d-grid gap-2 justify-content-md-start mb-4 mb-lg-3">
             {user ? (
