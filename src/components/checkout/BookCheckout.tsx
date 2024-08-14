@@ -140,7 +140,7 @@ export default function BookCheckout() {
     const fetchUserCurrentLoansCount = async () => {
       if (isAuthenticated) {
         const currentLoansCountResponse = await fetch(
-          `/api/secure/current-loans`,
+          `/api/secure/current-loancount`,
         );
         if (!currentLoansCountResponse.ok) {
           throw new Error('Something went wrong!');
