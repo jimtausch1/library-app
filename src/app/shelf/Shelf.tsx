@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import History from './History';
 import Loans from './Loans';
 
 const Shelf = () => {
@@ -54,7 +55,7 @@ const Shelf = () => {
             role="tabpanel"
             aria-labelledby="nav-history-tab"
           >
-            {/* {historyClick ? <HistoryPage /> : <></>} */}
+            {historyClick ? <History /> : <></>}
           </div>
         </div>
       </div>
