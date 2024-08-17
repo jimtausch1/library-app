@@ -1,4 +1,4 @@
-import SearchBooks from "../../components/search/SearchBooks";
+import SearchBooks from './SearchBooks';
 
 export default function Search() {
   return (

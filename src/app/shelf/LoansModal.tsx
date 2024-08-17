@@ -50,7 +50,7 @@ const LoansModal: React.FC<LoansModalProps> = (props) => {
                       />
                     ) : (
                       <Image
-                        src="./../../../Images/BooksImages/book-luv2code-1000.png"
+                        src="images/BookImages/book-luv2code-1000.png"
                         width="56"
                         height="87"
                         alt="Book"

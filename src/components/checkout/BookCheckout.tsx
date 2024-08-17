@@ -140,7 +140,7 @@ export default function BookCheckout() {
     const fetchUserCurrentLoansCount = async () => {
       if (isAuthenticated) {
         const currentLoansCountResponse = await fetch(
-          `/api/secure/current-loancount`,
+          `/api/secure/current-loancount`
         );
         if (!currentLoansCountResponse.ok) {
           throw new Error('Something went wrong!');
@@ -161,7 +161,7 @@ export default function BookCheckout() {
     const fetchUserCheckedOutBook = async () => {
       if (isAuthenticated) {
         const bookCheckedOut = await fetch(
-          `/api/secure/checked-out/${params.id}`,
+          `/api/secure/checked-out/${params.id}`
         );
 
         if (!bookCheckedOut.ok) {
@@ -214,7 +214,7 @@ export default function BookCheckout() {
     const reviewRequestModel = new ReviewRequestModel(
       starInput,
       bookId,
-      reviewDescription,
+      reviewDescription
     );
     const url = `http://localhost:8080/api/reviews/secure`;
     const requestOptions = {
@@ -242,7 +242,7 @@ export default function BookCheckout() {
               <Image src={book?.img} width="226" height="349" alt="Book" />
             ) : (
               <Image
-                src="../../images/BooksImages/book-luv2code-1000.png"
+                src="images/BookImages/book-luv2code-1000.png"
                 width="226"
                 height="349"
                 alt="Book"
@@ -277,7 +277,7 @@ export default function BookCheckout() {
             <Image src={book?.img} width="226" height="349" alt="Book" />
           ) : (
             <Image
-              src="../../Images/BooksImages/book-luv2code-1000.png"
+              src="images/BookImages/book-luv2code-1000.png"
               width="226"
               height="349"
               alt="Book"

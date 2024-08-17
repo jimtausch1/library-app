@@ -24,7 +24,7 @@ const History = () => {
     const fetchUserHistory = async () => {
       if (isAuthenticated) {
         const historyResponse = await fetch(
-          `/api/secure/user-history/${currentPage}`,
+          `/api/secure/user-history/${currentPage}`
         );
         if (!historyResponse.ok) {
           throw new Error('Something went wrong!');
@@ -77,7 +77,7 @@ const History = () => {
                         />
                       ) : (
                         <Image
-                          src="./../../../Images/BooksImages/book-luv2code-1000.png"
+                          src="images/BookImages/book-luv2code-1000.png"
                           width="123"
                           height="196"
                           alt="Default"
@@ -94,7 +94,7 @@ const History = () => {
                         />
                       ) : (
                         <Image
-                          src="./../../../Images/BooksImages/book-luv2code-1000.png"
+                          src="images/BookImages/book-luv2code-1000.png"
                           width="123"
                           height="196"
                           alt="Default"

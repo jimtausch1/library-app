@@ -25,7 +25,7 @@ const Loans = () => {
     const fetchUserCurrentLoans = async () => {
       if (isAuthenticated) {
         const shelfCurrentLoansResponse = await fetch(
-          `/api/secure/current-loans`,
+          `/api/secure/current-loans`
         );
         if (!shelfCurrentLoansResponse.ok) {
           throw new Error('Something went wrong!');
@@ -96,7 +96,7 @@ const Loans = () => {
                       />
                     ) : (
                       <Image
-                        src="./../../../Images/BooksImages/book-luv2code-1000.png"
+                        src="images/BookImages/book-luv2code-1000.png"
                         width="226"
                         height="349"
                         alt="Book"
@@ -188,7 +188,7 @@ const Loans = () => {
                     />
                   ) : (
                     <Image
-                      src="./../../../Images/BooksImages/book-luv2code-1000.png"
+                      src="images/BookImages/book-luv2code-1000.png"
                       width="226"
                       height="349"
                       alt="Book"

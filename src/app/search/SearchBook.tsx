@@ -18,7 +18,7 @@ export default function SearchBook(props: SearchBookProps) {
               <Image src={props.book.img} width="123" height="196" alt="Book" />
             ) : (
               <Image
-                src="../../images/BooksImages/book-luv2code-1000.png"
+                src="/images/BookImages/book-luv2code-1000.png"
                 width="123"
                 height="196"
                 alt="Book"
@@ -33,7 +33,7 @@ export default function SearchBook(props: SearchBookProps) {
               <Image src={props.book.img} width="123" height="196" alt="Book" />
             ) : (
               <Image
-                src="../../images/BooksImages/book-luv2code-1000.png"
+                src="/images/BookImages/book-luv2code-1000.png"
                 width="123"
                 height="196"
                 alt="Book"
