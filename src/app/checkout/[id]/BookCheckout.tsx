@@ -6,8 +6,8 @@ import ReviewRequestModel from '@/models/ReviewRequestModel';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { SpinnerLoading } from '../utils/SpinnerLoading';
-import StarsReview from '../utils/StarsReview';
+import { SpinnerLoading } from '../../../components/utils/SpinnerLoading';
+import StarsReview from '../../../components/utils/StarsReview';
 import CheckoutAndReviewBox from './CheckoutAndReviewBox';
 import { LatestReviews } from './LatestReviews';
 import Image from 'next/image';
@@ -36,6 +36,7 @@ export default function BookCheckout() {
   const [isLoadingBookCheckedOut, setIsLoadingBookCheckedOut] = useState(true);
 
   const params = useParams<{ id: string }>();
+  console.log(`isCheckedOut: ${isCheckedOut}`);
 
   const isAuthenticated = user !== undefined;
 
@@ -116,7 +117,7 @@ export default function BookCheckout() {
       setIsLoadingReview(false);
       setHttpError(error.message);
     });
-  }, [isReviewLeft, params.id]);
+  }, [params.id]);
 
   useEffect(() => {
     const fetchUserReviewBook = async () => {
@@ -216,16 +217,10 @@ export default function BookCheckout() {
       bookId,
       reviewDescription
     );
-    const url = `http://localhost:8080/api/reviews/secure`;
-    const requestOptions = {
+    const returnResponse = await fetch(`/api/secure/review-add`, {
       method: 'POST',
-      headers: {
-        // Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
       body: JSON.stringify(reviewRequestModel),
-    };
-    const returnResponse = await fetch(url, requestOptions);
+    });
     if (!returnResponse.ok) {
       throw new Error('Something went wrong!');
     }

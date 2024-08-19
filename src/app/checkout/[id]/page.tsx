@@ -1,4 +1,4 @@
-import BookCheckout from '@/components/checkout/BookCheckout';
+import BookCheckout from './BookCheckout';
 
 export default function Checkout() {
   return (

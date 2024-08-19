@@ -32,15 +32,15 @@ const AdminMessages = () => {
     const fetchUserMessages = async () => {
       if (isAuthenticated) {
         const messagesResponse = await fetch(
-          `/api/secure/messages-get/${currentPage}`,
+          `/api/secure/messages-get/${currentPage}`
         );
         if (!messagesResponse.ok) {
           throw new Error('Something went wrong!');
         }
         const messagesResponseJson = await messagesResponse.json();
 
-        setMessages(messagesResponseJson._embedded.messages);
-        setTotalPages(messagesResponseJson.page.totalPages);
+        setMessages(messagesResponseJson.content);
+        setTotalPages(messagesResponseJson.totalPages);
       }
       setIsLoadingMessages(false);
     };
@@ -64,17 +64,16 @@ const AdminMessages = () => {
   }
 
   async function submitResponseToQuestion(id: number, response: string) {
-    const url = `http://localhost:8080/api/messages/secure/admin/message`;
     if (isAuthenticated && id !== null && response !== '') {
       const messageAdminRequestModel: AdminMessageRequest =
         new AdminMessageRequest(id, response);
 
       const messageAdminRequestModelResponse = await fetch(
-        `/api/secure/message-add`,
+        `/api/secure/message-admin`,
         {
           method: 'PUT',
           body: JSON.stringify(messageAdminRequestModel),
-        },
+        }
       );
       if (!messageAdminRequestModelResponse.ok) {
         throw new Error('Something went wrong!');
