@@ -1,10 +1,10 @@
 'use client';
 
-import SearchBook from './SearchBook';
-import { SpinnerLoading } from '@/components/utils/SpinnerLoading';
+import { SpinnerLoading } from '@/components/spinner/SpinnerLoading';
 import BookModel from '@/models/BookModel';
 import { useEffect, useState } from 'react';
-import Pagination from '../../components/utils/Pagination';
+import Pagination from '../../components/pagination/Pagination';
+import SearchBook from './SearchBook';
 
 export default function SearchBooks() {
   const [books, setBooks] = useState<BookModel[]>([]);

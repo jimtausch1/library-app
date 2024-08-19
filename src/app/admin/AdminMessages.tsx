@@ -1,12 +1,12 @@
 'use client';
 
-import Pagination from '@/components/utils/Pagination';
-import { SpinnerLoading } from '@/components/utils/SpinnerLoading';
+import Pagination from '@/components/pagination/Pagination';
+import { SpinnerLoading } from '@/components/spinner/SpinnerLoading';
+import AdminMessageRequest from '@/models/AdminMessageRequest';
 import MessageModel from '@/models/MessageModel';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useEffect, useState } from 'react';
 import AdminMessage from './AdminMessage';
-import AdminMessageRequest from '@/models/AdminMessageRequest';
 
 const AdminMessages = () => {
   const { user } = useUser();

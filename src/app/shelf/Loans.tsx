@@ -1,12 +1,12 @@
 'use client';
 
-import { SpinnerLoading } from '@/components/utils/SpinnerLoading';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import { useUser } from '@auth0/nextjs-auth0/client';
-import LoansModal from './LoansModal';
+import { SpinnerLoading } from '@/components/spinner/SpinnerLoading';
 import ShelfCurrentLoans from '@/models/ShelfCurrentLoans';
+import { useUser } from '@auth0/nextjs-auth0/client';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import LoansModal from './LoansModal';
 
 const Loans = () => {
   const { user } = useUser();

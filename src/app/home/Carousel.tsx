@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 
-import { SpinnerLoading } from '../../components/utils/SpinnerLoading';
+import { SpinnerLoading } from '../../components/spinner/SpinnerLoading';
 import BookModel from '../../models/BookModel';
 import { useBooks } from '../hooks/useBooks';
 import ReturnBook from './ReturnBook';

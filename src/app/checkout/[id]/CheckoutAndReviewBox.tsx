@@ -1,6 +1,6 @@
 import BookModel from '@/models/BookModel';
 import Link from 'next/link';
-import LeaveAReview from '../../../components/utils/LeaveAReview';
+import LeaveAReview from '../../reviewlist/[id]/LeaveAReview';
 
 export interface CheckoutAndReviewBoxProps {
   book: BookModel | undefined;

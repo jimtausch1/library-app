@@ -2,7 +2,7 @@
 
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { default as Link, default as NavLink } from 'next/link';
-import { SpinnerLoading } from '../utils/SpinnerLoading';
+import { SpinnerLoading } from '../spinner/SpinnerLoading';
 
 const Navbar = () => {
   const { user, error, isLoading } = useUser();

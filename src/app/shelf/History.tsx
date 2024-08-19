@@ -1,10 +1,10 @@
-import Pagination from '@/components/utils/Pagination';
-import { SpinnerLoading } from '@/components/utils/SpinnerLoading';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import Pagination from '@/components/pagination/Pagination';
+import { SpinnerLoading } from '@/components/spinner/SpinnerLoading';
 import HistoryModel from '@/models/HistoryModel';
 import { useUser } from '@auth0/nextjs-auth0/client';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 const History = () => {
   const { user } = useUser();

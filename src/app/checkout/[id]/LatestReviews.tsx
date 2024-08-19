@@ -1,6 +1,6 @@
 import ReviewModel from '@/models/ReviewModel';
 import Link from 'next/link';
-import Review from '../../../components/utils/Review';
+import Review from '../../reviewlist/[id]/Review';
 
 export const LatestReviews: React.FC<{
   reviews: ReviewModel[];

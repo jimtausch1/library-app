@@ -1,11 +1,11 @@
 'use client';
 
-import Pagination from '@/components/utils/Pagination';
-import Review from '@/components/utils/Review';
-import { SpinnerLoading } from '@/components/utils/SpinnerLoading';
+import Pagination from '@/components/pagination/Pagination';
+import { SpinnerLoading } from '@/components/spinner/SpinnerLoading';
 import ReviewModel from '@/models/ReviewModel';
-import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import Review from './Review';
 
 export default function ReviewList() {
   const [reviews, setReviews] = useState<ReviewModel[]>([]);
@@ -24,7 +24,9 @@ export default function ReviewList() {
 
   useEffect(() => {
     const fetchBookReviewsData = async () => {
-      const reviewUrl: string = `http://localhost:8080/api/reviews/search/findByBookId?bookId=${bookId}&page=${currentPage - 1}&size=${reviewsPerPage}`;
+      const reviewUrl: string = `http://localhost:8080/api/reviews/search/findByBookId?bookId=${bookId}&page=${
+        currentPage - 1
+      }&size=${reviewsPerPage}`;
 
       const responseReviews = await fetch(reviewUrl);
 

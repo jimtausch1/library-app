@@ -1,10 +1,10 @@
 'use client';
 
-import Pagination from '@/components/utils/Pagination';
-import { SpinnerLoading } from '@/components/utils/SpinnerLoading';
+import Pagination from '@/components/pagination/Pagination';
+import { SpinnerLoading } from '@/components/spinner/SpinnerLoading';
 import MessageModel from '@/models/MessageModel';
-import { useEffect, useState } from 'react';
 import { useUser } from '@auth0/nextjs-auth0/client';
+import { useEffect, useState } from 'react';
 
 const Messages = () => {
   const { user } = useUser();
@@ -25,7 +25,7 @@ const Messages = () => {
     const fetchUserMessages = async () => {
       if (isAuthenticated) {
         const messagesResponse = await fetch(
-          `/api/secure/messages-get/${currentPage}`,
+          `/api/secure/messages-get/${currentPage}`
         );
         if (!messagesResponse.ok) {
           throw new Error('Something went wrong!');

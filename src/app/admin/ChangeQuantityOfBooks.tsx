@@ -1,7 +1,7 @@
 'use client';
 
-import Pagination from '@/components/utils/Pagination';
-import { SpinnerLoading } from '@/components/utils/SpinnerLoading';
+import Pagination from '@/components/pagination/Pagination';
+import { SpinnerLoading } from '@/components/spinner/SpinnerLoading';
 import BookModel from '@/models/BookModel';
 import { useEffect, useState } from 'react';
 import ChangeQuantityOfBook from './ChangeQuantityOfBook';
@@ -19,7 +19,9 @@ const ChangeQuantityOfBooks = () => {
 
   useEffect(() => {
     const fetchBooks = async () => {
-      const baseUrl: string = `http://localhost:8080/api/books?page=${currentPage - 1}&size=${booksPerPage}`;
+      const baseUrl: string = `http://localhost:8080/api/books?page=${
+        currentPage - 1
+      }&size=${booksPerPage}`;
 
       const response = await fetch(baseUrl);
 
