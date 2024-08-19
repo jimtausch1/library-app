@@ -1,8 +1,8 @@
-import Carousel from "@/components/home/Carousel";
-import ExploreTopBooks from "@/components/home/ExploreTopBooks";
-import Heros from "@/components/home/Heros";
-import LibraryServices from "@/components/home/LibraryServices";
-import BootstrapJS from "@/components/utils/BootstrapJS";
+import Carousel from '@/app/home/Carousel';
+import ExploreTopBooks from '@/app/home/ExploreTopBooks';
+import Heros from '@/app/home/Heros';
+import LibraryServices from '@/app/home/LibraryServices';
+import BootstrapJS from '@/components/utils/BootstrapJS';
 
 export default function Home() {
   return (
