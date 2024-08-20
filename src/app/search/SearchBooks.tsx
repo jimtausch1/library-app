@@ -2,84 +2,38 @@
 
 import { SpinnerLoading } from '@/components/spinner/SpinnerLoading';
 import BookModel from '@/models/BookModel';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Pagination from '../../components/pagination/Pagination';
+import { useSearchBooks } from '../hooks/useSearchBooks';
 import SearchBook from './SearchBook';
 
 export default function SearchBooks() {
-  const [books, setBooks] = useState<BookModel[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [httpError, setHttpError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [booksPerPage] = useState(5);
-  const [totalAmountOfBooks, setTotalAmountOfBooks] = useState(0);
-  const [totalPages, setTotalPages] = useState(0);
   const [search, setSearch] = useState('');
   const [searchUrl, setSearchUrl] = useState('');
   const [categorySelection, setCategorySelection] = useState('Book category');
 
-  useEffect(() => {
-    const fetchBooks = async () => {
-      const baseUrl: string = 'http://localhost:8080/api/books';
+  const { data, isLoading, error } = useSearchBooks(
+    searchUrl,
+    currentPage,
+    booksPerPage
+  );
 
-      let url: string = '';
+  const books = data?.responseData;
+  const totalPages = data?.totalPages;
+  const totalAmountOfBooks = data?.totalElements;
 
-      if (searchUrl === '') {
-        url = `${baseUrl}?page=${currentPage - 1}&size=${booksPerPage}`;
-      } else {
-        let searchWithPage = searchUrl.replace(
-          '<pageNumber>',
-          `${currentPage - 1}`
-        );
-        url = baseUrl + searchWithPage;
-      }
-
-      const response = await fetch(url);
-
-      if (!response.ok) {
-        throw new Error('Something went wrong!');
-      }
-
-      const responseJson = await response.json();
-
-      const responseData = responseJson._embedded.books;
-
-      setTotalAmountOfBooks(responseJson.page.totalElements);
-      setTotalPages(responseJson.page.totalPages);
-
-      const loadedBooks: BookModel[] = [];
-
-      for (const key in responseData) {
-        loadedBooks.push({
-          id: responseData[key].id,
-          title: responseData[key].title,
-          author: responseData[key].author,
-          description: responseData[key].description,
-          copies: responseData[key].copies,
-          copiesAvailable: responseData[key].copiesAvailable,
-          category: responseData[key].category,
-          img: responseData[key].img,
-        });
-      }
-
-      setBooks(loadedBooks);
-      setIsLoading(false);
-    };
-    fetchBooks().catch((error: any) => {
-      setIsLoading(false);
-      setHttpError(error.message);
-    });
-    window.scrollTo(0, 0);
-  }, [booksPerPage, currentPage, searchUrl]);
+  window.scrollTo(0, 0);
 
   if (isLoading) {
     return <SpinnerLoading />;
   }
 
-  if (httpError) {
+  if (error) {
     return (
       <div className="container m-5">
-        <p>{httpError}</p>
+        <p>{error.message}</p>
       </div>
     );
   }
@@ -198,7 +152,7 @@ export default function SearchBooks() {
                 {indexOfFirstBook + 1} to {lastItem} of {totalAmountOfBooks}{' '}
                 items:
               </p>
-              {books.map((book) => (
+              {books.map((book: BookModel) => (
                 <SearchBook book={book} key={book.id} />
               ))}
             </>

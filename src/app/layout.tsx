@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -27,6 +28,7 @@ export default function RootLayout({
             <Navbar></Navbar>
             {children}
             <Footer></Footer>
+            <ReactQueryDevtools />
           </body>
         </QueryProvider>
       </UserProvider>
