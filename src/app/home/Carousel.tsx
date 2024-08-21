@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 
-import { SpinnerLoading } from '../../components/spinner/SpinnerLoading';
-import BookModel from '../../models/BookModel';
-import { useBooks } from '../hooks/useBooks';
+import { SpinnerLoading } from '@/components/spinner/SpinnerLoading';
+import { useBooks } from '@/hooks/useBooks';
+import BookModel from '@/models/BookModel';
 import ReturnBook from './ReturnBook';
 
 const Carousel = () => {

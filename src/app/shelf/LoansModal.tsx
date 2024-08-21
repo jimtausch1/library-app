@@ -8,20 +8,25 @@ interface LoansModalProps {
   renewLoan: Function;
 }
 
-const LoansModal: React.FC<LoansModalProps> = (props) => {
+export default function LoansModal({
+  shelfCurrentLoan,
+  mobile,
+  returnBook,
+  renewLoan,
+}: LoansModalProps) {
   return (
     <div
       className="modal fade"
       id={
-        props.mobile
-          ? `mobilemodal${props.shelfCurrentLoan.book.id}`
-          : `modal${props.shelfCurrentLoan.book.id}`
+        mobile
+          ? `mobilemodal${shelfCurrentLoan.book.id}`
+          : `modal${shelfCurrentLoan.book.id}`
       }
       data-bs-backdrop="static"
       data-bs-keyboard="false"
       aria-labelledby="staticBackdropLabel"
       aria-hidden="true"
-      key={props.shelfCurrentLoan.book.id}
+      key={shelfCurrentLoan.book.id}
     >
       <div className="modal-dialog">
         <div className="modal-content">
@@ -41,16 +46,16 @@ const LoansModal: React.FC<LoansModalProps> = (props) => {
               <div className="mt-3">
                 <div className="row">
                   <div className="col-2">
-                    {props.shelfCurrentLoan.book?.img ? (
+                    {shelfCurrentLoan.book?.img ? (
                       <Image
-                        src={props.shelfCurrentLoan.book?.img}
+                        src={shelfCurrentLoan.book?.img}
                         width="56"
                         height="87"
                         alt="Book"
                       />
                     ) : (
                       <Image
-                        src="images/BookImages/book-luv2code-1000.png"
+                        src="/images/BookImages/book-luv2code-1000.png"
                         width="56"
                         height="87"
                         alt="Book"
@@ -58,29 +63,27 @@ const LoansModal: React.FC<LoansModalProps> = (props) => {
                     )}
                   </div>
                   <div className="col-10">
-                    <h6>{props.shelfCurrentLoan.book.author}</h6>
-                    <h4>{props.shelfCurrentLoan.book.title}</h4>
+                    <h6>{shelfCurrentLoan.book.author}</h6>
+                    <h4>{shelfCurrentLoan.book.title}</h4>
                   </div>
                 </div>
                 <hr />
-                {props.shelfCurrentLoan.daysLeft > 0 && (
+                {shelfCurrentLoan.daysLeft > 0 && (
                   <p className="text-secondary">
-                    Due in {props.shelfCurrentLoan.daysLeft} days.
+                    Due in {shelfCurrentLoan.daysLeft} days.
                   </p>
                 )}
-                {props.shelfCurrentLoan.daysLeft === 0 && (
+                {shelfCurrentLoan.daysLeft === 0 && (
                   <p className="text-success">Due Today.</p>
                 )}
-                {props.shelfCurrentLoan.daysLeft < 0 && (
+                {shelfCurrentLoan.daysLeft < 0 && (
                   <p className="text-danger">
-                    Past due by {props.shelfCurrentLoan.daysLeft} days.
+                    Past due by {shelfCurrentLoan.daysLeft} days.
                   </p>
                 )}
                 <div className="list-group mt-3">
                   <button
-                    onClick={() =>
-                      props.returnBook(props.shelfCurrentLoan.book.id)
-                    }
+                    onClick={() => returnBook(shelfCurrentLoan.book.id)}
                     data-bs-dismiss="modal"
                     className="list-group-item list-group-item-action"
                     aria-current="true"
@@ -89,18 +92,18 @@ const LoansModal: React.FC<LoansModalProps> = (props) => {
                   </button>
                   <button
                     onClick={
-                      props.shelfCurrentLoan.daysLeft < 0
+                      shelfCurrentLoan.daysLeft < 0
                         ? (event) => event.preventDefault()
-                        : () => props.renewLoan(props.shelfCurrentLoan.book.id)
+                        : () => renewLoan(shelfCurrentLoan.book.id)
                     }
                     data-bs-dismiss="modal"
                     className={
-                      props.shelfCurrentLoan.daysLeft < 0
+                      shelfCurrentLoan.daysLeft < 0
                         ? 'list-group-item list-group-item-action inactiveLink'
                         : 'list-group-item list-group-item-action'
                     }
                   >
-                    {props.shelfCurrentLoan.daysLeft < 0
+                    {shelfCurrentLoan.daysLeft < 0
                       ? 'Late dues cannot be renewed'
                       : 'Renew loan for 7 days'}
                   </button>
@@ -121,6 +124,4 @@ const LoansModal: React.FC<LoansModalProps> = (props) => {
       </div>
     </div>
   );
-};
-
-export default LoansModal;
+}

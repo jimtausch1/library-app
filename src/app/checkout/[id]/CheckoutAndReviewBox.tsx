@@ -1,6 +1,6 @@
+import LeaveAReview from '@/app/reviewlist/[id]/LeaveAReview';
 import BookModel from '@/models/BookModel';
 import Link from 'next/link';
-import LeaveAReview from '../../reviewlist/[id]/LeaveAReview';
 
 export interface CheckoutAndReviewBoxProps {
   book: BookModel | undefined;
@@ -13,25 +13,34 @@ export interface CheckoutAndReviewBoxProps {
   submitReview: Function;
 }
 
-export default function CheckoutAndReviewBox(props: CheckoutAndReviewBoxProps) {
+export default function CheckoutAndReviewBox({
+  book,
+  mobile,
+  currentLoansCount,
+  isAuthenticated,
+  isCheckedOut,
+  checkoutBook,
+  isReviewLeft,
+  submitReview,
+}: CheckoutAndReviewBoxProps) {
   function buttonRender() {
-    if (props.isAuthenticated) {
-      if (!props.isCheckedOut && props.currentLoansCount < 5) {
+    if (isAuthenticated) {
+      if (!isCheckedOut && currentLoansCount < 5) {
         return (
           <button
-            onClick={() => props.checkoutBook()}
+            onClick={() => checkoutBook()}
             className="btn btn-success btn-lg"
           >
             Checkout
           </button>
         );
-      } else if (props.isCheckedOut) {
+      } else if (isCheckedOut) {
         return (
           <p>
             <b>Book checked out. Enjoy!</b>
           </p>
         );
-      } else if (!props.isCheckedOut) {
+      } else if (!isCheckedOut) {
         return <p className="text-danger">Too many books checked out.</p>;
       }
     }
@@ -43,9 +52,9 @@ export default function CheckoutAndReviewBox(props: CheckoutAndReviewBoxProps) {
   }
 
   function reviewRender() {
-    if (props.isAuthenticated && !props.isReviewLeft) {
-      return <LeaveAReview submitReview={props.submitReview} />;
-    } else if (props.isAuthenticated && props.isReviewLeft) {
+    if (isAuthenticated && !isReviewLeft) {
+      return <LeaveAReview submitReview={submitReview} />;
+    } else if (isAuthenticated && isReviewLeft) {
       return (
         <p>
           <b>Thank you for your review!</b>
@@ -63,30 +72,28 @@ export default function CheckoutAndReviewBox(props: CheckoutAndReviewBoxProps) {
   return (
     <div
       className={
-        props.mobile ? 'card d-flex mt-5' : 'card col-3 container d-flex mb-5'
+        mobile ? 'card d-flex mt-5' : 'card col-3 container d-flex mb-5'
       }
     >
       <div className="card-body container">
         <div className="mt-3">
           <p>
-            <b>{props.currentLoansCount}/5 </b>
+            <b>{currentLoansCount}/5 </b>
             books checked out
           </p>
           <hr />
-          {props.book &&
-          props.book.copiesAvailable &&
-          props.book.copiesAvailable > 0 ? (
+          {book && book.copiesAvailable && book.copiesAvailable > 0 ? (
             <h4 className="text-success">Available</h4>
           ) : (
             <h4 className="text-danger">Wait List</h4>
           )}
           <div className="row">
             <p className="col-6 lead">
-              <b>{props.book?.copies} </b>
+              <b>{book?.copies} </b>
               copies
             </p>
             <p className="col-6 lead">
-              <b>{props.book?.copiesAvailable} </b>
+              <b>{book?.copiesAvailable} </b>
               available
             </p>
           </div>

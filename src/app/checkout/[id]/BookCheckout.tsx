@@ -1,184 +1,223 @@
 'use client';
 
-import BookModel from '@/models/BookModel';
-import ReviewModel from '@/models/ReviewModel';
+import StarsReview from '@/app/reviewlist/[id]/StarsReview';
+import { SpinnerLoading } from '@/components/spinner/SpinnerLoading';
+import { useBookById } from '@/hooks/useBookById';
+import { useBookReviews } from '@/hooks/useBookReviews';
+import { useCurrentLoansCount } from '@/hooks/useCurrentLoanCount';
+import { useUserCheckedOut } from '@/hooks/useUserCheckedOut';
+import { useUserReview } from '@/hooks/useUserReview';
 import ReviewRequestModel from '@/models/ReviewRequestModel';
 import { useUser } from '@auth0/nextjs-auth0/client';
-import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { SpinnerLoading } from '../../../components/spinner/SpinnerLoading';
-import StarsReview from '../../reviewlist/[id]/StarsReview';
-import CheckoutAndReviewBox from './CheckoutAndReviewBox';
-import { LatestReviews } from './LatestReviews';
 import Image from 'next/image';
+import { useParams } from 'next/navigation';
+import CheckoutAndReviewBox from './CheckoutAndReviewBox';
+import LatestReviews from './LatestReviews';
 
 export default function BookCheckout() {
   const { user } = useUser();
-  const [book, setBook] = useState<BookModel>();
-  const [isLoadingBook, setIsLoadingBook] = useState(true);
-  const [httpError, setHttpError] = useState(null);
+  // const [book, setBook] = useState<BookModel>();
+  // const [isLoadingBook, setIsLoadingBook] = useState(true);
+  // const [httpError, setHttpError] = useState(null);
 
   // Review State
-  const [reviews, setReviews] = useState<ReviewModel[]>([]);
-  const [totalStars, setTotalStars] = useState(0);
-  const [isLoadingReview, setIsLoadingReview] = useState(true);
+  // const [reviews, setReviews] = useState<ReviewModel[]>([]);
+  // const [totalStars, setTotalStars] = useState(0);
+  // const [isLoadingReview, setIsLoadingReview] = useState(true);
 
-  const [isReviewLeft, setIsReviewLeft] = useState(false);
-  const [isLoadingUserReview, setIsLoadingUserReview] = useState(true);
+  // const [isReviewLeft, setIsReviewLeft] = useState(false);
+  // const [isLoadingUserReview, setIsLoadingUserReview] = useState(true);
 
   // Loans Count State
-  const [currentLoansCount, setCurrentLoansCount] = useState(0);
-  const [isLoadingCurrentLoansCount, setIsLoadingCurrentLoansCount] =
-    useState(true);
+  // const [currentLoansCount, setCurrentLoansCount] = useState(0);
+  // const [isLoadingCurrentLoansCount, setIsLoadingCurrentLoansCount] =
+  //   useState(true);
 
   // Is Book Check Out?
-  const [isCheckedOut, setIsCheckedOut] = useState(false);
-  const [isLoadingBookCheckedOut, setIsLoadingBookCheckedOut] = useState(true);
+  // const [isCheckedOut, setIsCheckedOut] = useState(false);
+  // const [isLoadingBookCheckedOut, setIsLoadingBookCheckedOut] = useState(true);
 
   const params = useParams<{ id: string }>();
-  console.log(`isCheckedOut: ${isCheckedOut}`);
+  // console.log(`isCheckedOut: ${isCheckedOut}`);
 
   const isAuthenticated = user !== undefined;
 
-  useEffect(() => {
-    const fetchBook = async () => {
-      const baseUrl: string = `http://localhost:8080/api/books/${params.id}`;
+  const {
+    data: isCheckedOut,
+    isLoading: isLoadingBookCheckedOut,
+    error: loadingBookCheckedOutError,
+  } = useUserCheckedOut(params.id);
 
-      const response = await fetch(baseUrl);
+  const {
+    data: currentLoansCount,
+    isLoading: isLoadingCurrentLoansCount,
+    error: loadingCurrentLoansCountError,
+  } = useCurrentLoansCount(isCheckedOut);
 
-      if (!response.ok) {
-        throw new Error('Something went wrong!');
-      }
+  const {
+    data: book,
+    isLoading: isLoadingBook,
+    error: loadingBookError,
+  } = useBookById(params.id, isCheckedOut);
 
-      const responseJson = await response.json();
+  const {
+    data,
+    isLoading: isLoadingReview,
+    error: loadingReviewError,
+  } = useBookReviews(params.id);
 
-      const loadedBook: BookModel = {
-        id: responseJson.id,
-        title: responseJson.title,
-        author: responseJson.author,
-        description: responseJson.description,
-        copies: responseJson.copies,
-        copiesAvailable: responseJson.copiesAvailable,
-        category: responseJson.category,
-        img: responseJson.img,
-      };
+  const reviews = data?.loadedReviews ?? [];
+  const totalStars = data?.totalStars ?? 0;
 
-      setBook(loadedBook);
-      setIsLoadingBook(false);
-    };
-    fetchBook().catch((error: any) => {
-      setIsLoadingBook(false);
-      setHttpError(error.message);
-    });
-  }, [isCheckedOut, params.id]);
+  const {
+    data: isReviewLeft,
+    isLoading: isLoadingUserReview,
+    error: loadingUserReviewError,
+  } = useUserReview(params.id);
 
-  useEffect(() => {
-    const fetchBookReviews = async () => {
-      const reviewUrl: string = `http://localhost:8080/api/reviews/search/findByBookId?bookId=${params.id}`;
+  // useEffect(() => {
+  //   setIsCheckedOut(isCheckedOutResult);
+  // }, [isCheckedOutResult]);
 
-      const responseReviews = await fetch(reviewUrl);
+  // useEffect(() => {
+  //   const fetchBook = async () => {
+  //     const baseUrl: string = `http://localhost:8080/api/books/${params.id}`;
 
-      if (!responseReviews.ok) {
-        throw new Error('Something went wrong!');
-      }
+  //     const response = await fetch(baseUrl);
 
-      const responseJsonReviews = await responseReviews.json();
+  //     if (!response.ok) {
+  //       throw new Error('Something went wrong!');
+  //     }
 
-      const responseData = responseJsonReviews._embedded.reviews;
+  //     const responseJson = await response.json();
 
-      const loadedReviews: ReviewModel[] = [];
+  //     const loadedBook: BookModel = {
+  //       id: responseJson.id,
+  //       title: responseJson.title,
+  //       author: responseJson.author,
+  //       description: responseJson.description,
+  //       copies: responseJson.copies,
+  //       copiesAvailable: responseJson.copiesAvailable,
+  //       category: responseJson.category,
+  //       img: responseJson.img,
+  //     };
 
-      let weightedStarReviews: number = 0;
+  //     setBook(loadedBook);
+  //     setIsLoadingBook(false);
+  //   };
+  //   fetchBook().catch((error: any) => {
+  //     setIsLoadingBook(false);
+  //     setHttpError(error.message);
+  //   });
+  // }, [isCheckedOut, params.id]);
 
-      for (const key in responseData) {
-        loadedReviews.push({
-          id: responseData[key].id,
-          userEmail: responseData[key].userEmail,
-          date: responseData[key].date,
-          rating: responseData[key].rating,
-          book_id: responseData[key].bookId,
-          reviewDescription: responseData[key].reviewDescription,
-        });
-        weightedStarReviews = weightedStarReviews + responseData[key].rating;
-      }
+  // useEffect(() => {
+  //   const fetchBookReviews = async () => {
+  //     const reviewUrl: string = `http://localhost:8080/api/reviews/search/findByBookId?bookId=${params.id}`;
 
-      if (loadedReviews) {
-        const round = (
-          Math.round((weightedStarReviews / loadedReviews.length) * 2) / 2
-        ).toFixed(1);
-        setTotalStars(Number(round));
-      }
+  //     const responseReviews = await fetch(reviewUrl);
 
-      setReviews(loadedReviews);
-      setIsLoadingReview(false);
-    };
+  //     if (!responseReviews.ok) {
+  //       throw new Error('Something went wrong!');
+  //     }
 
-    fetchBookReviews().catch((error: any) => {
-      setIsLoadingReview(false);
-      setHttpError(error.message);
-    });
-  }, [params.id]);
+  //     const responseJsonReviews = await responseReviews.json();
 
-  useEffect(() => {
-    const fetchUserReviewBook = async () => {
-      if (isAuthenticated) {
-        const userReview = await fetch(`/api/secure/user-review/${params.id}`);
-        if (!userReview.ok) {
-          throw new Error('Something went wrong');
-        }
-        const userReviewResponseJson = await userReview.json();
-        setIsReviewLeft(userReviewResponseJson);
-      }
-      setIsLoadingUserReview(false);
-    };
-    fetchUserReviewBook().catch((error: any) => {
-      setIsLoadingUserReview(false);
-      setHttpError(error.message);
-    });
-  }, [isAuthenticated, params.id]);
+  //     const responseData = responseJsonReviews._embedded.reviews;
 
-  useEffect(() => {
-    const fetchUserCurrentLoansCount = async () => {
-      if (isAuthenticated) {
-        const currentLoansCountResponse = await fetch(
-          `/api/secure/current-loancount`
-        );
-        if (!currentLoansCountResponse.ok) {
-          throw new Error('Something went wrong!');
-        }
-        const currentLoansCountResponseJson =
-          await currentLoansCountResponse.json();
-        setCurrentLoansCount(currentLoansCountResponseJson);
-      }
-      setIsLoadingCurrentLoansCount(false);
-    };
-    fetchUserCurrentLoansCount().catch((error: any) => {
-      setIsLoadingCurrentLoansCount(false);
-      setHttpError(error.message);
-    });
-  }, [isAuthenticated, isCheckedOut]);
+  //     const loadedReviews: ReviewModel[] = [];
 
-  useEffect(() => {
-    const fetchUserCheckedOutBook = async () => {
-      if (isAuthenticated) {
-        const bookCheckedOut = await fetch(
-          `/api/secure/checked-out/${params.id}`
-        );
+  //     let weightedStarReviews: number = 0;
 
-        if (!bookCheckedOut.ok) {
-          throw new Error('Something went wrong!');
-        }
+  //     for (const key in responseData) {
+  //       loadedReviews.push({
+  //         id: responseData[key].id,
+  //         userEmail: responseData[key].userEmail,
+  //         date: responseData[key].date,
+  //         rating: responseData[key].rating,
+  //         book_id: responseData[key].bookId,
+  //         reviewDescription: responseData[key].reviewDescription,
+  //       });
+  //       weightedStarReviews = weightedStarReviews + responseData[key].rating;
+  //     }
 
-        const bookCheckedOutResponseJson = await bookCheckedOut.json();
-        setIsCheckedOut(bookCheckedOutResponseJson);
-      }
-      setIsLoadingBookCheckedOut(false);
-    };
-    fetchUserCheckedOutBook().catch((error: any) => {
-      setIsLoadingBookCheckedOut(false);
-      setHttpError(error.message);
-    });
-  }, [isAuthenticated, params.id]);
+  //     if (loadedReviews) {
+  //       const round = (
+  //         Math.round((weightedStarReviews / loadedReviews.length) * 2) / 2
+  //       ).toFixed(1);
+  //       setTotalStars(Number(round));
+  //     }
+
+  //     setReviews(loadedReviews);
+  //     setIsLoadingReview(false);
+  //   };
+
+  //   fetchBookReviews().catch((error: any) => {
+  //     setIsLoadingReview(false);
+  //     setHttpError(error.message);
+  //   });
+  // }, [params.id]);
+
+  // useEffect(() => {
+  //   const fetchUserReviewBook = async () => {
+  //     if (isAuthenticated) {
+  //       const userReview = await fetch(`/api/secure/user-review/${params.id}`);
+  //       if (!userReview.ok) {
+  //         throw new Error('Something went wrong');
+  //       }
+  //       const userReviewResponseJson = await userReview.json();
+  //       setIsReviewLeft(userReviewResponseJson);
+  //     }
+  //     setIsLoadingUserReview(false);
+  //   };
+  //   fetchUserReviewBook().catch((error: any) => {
+  //     setIsLoadingUserReview(false);
+  //     setHttpError(error.message);
+  //   });
+  // }, [isAuthenticated, params.id]);
+
+  // useEffect(() => {
+  //   const fetchUserCurrentLoansCount = async () => {
+  //     if (isAuthenticated) {
+  //       const currentLoansCountResponse = await fetch(
+  //         `/api/secure/current-loancount`
+  //       );
+  //       if (!currentLoansCountResponse.ok) {
+  //         throw new Error('Something went wrong!');
+  //       }
+  //       const currentLoansCountResponseJson =
+  //         await currentLoansCountResponse.json();
+  //       setCurrentLoansCount(currentLoansCountResponseJson);
+  //     }
+  //     setIsLoadingCurrentLoansCount(false);
+  //   };
+  //   fetchUserCurrentLoansCount().catch((error: any) => {
+  //     setIsLoadingCurrentLoansCount(false);
+  //     setHttpError(error.message);
+  //   });
+  // }, [isAuthenticated, isCheckedOut]);
+
+  // useEffect(() => {
+  //   const fetchUserCheckedOutBook = async () => {
+  //     if (isAuthenticated) {
+  //       const bookCheckedOut = await fetch(
+  //         `/api/secure/checked-out/${params.id}`
+  //       );
+
+  //       if (!bookCheckedOut.ok) {
+  //         throw new Error('Something went wrong!');
+  //       }
+
+  //       const bookCheckedOutResponseJson = await bookCheckedOut.json();
+  //       setIsCheckedOut(bookCheckedOutResponseJson);
+  //     }
+  //     setIsLoadingBookCheckedOut(false);
+  //   };
+  //   fetchUserCheckedOutBook().catch((error: any) => {
+  //     setIsLoadingBookCheckedOut(false);
+  //     setHttpError(error.message);
+  //   });
+  // }, [isAuthenticated, params.id]);
 
   if (
     isLoadingBook ||
@@ -190,10 +229,17 @@ export default function BookCheckout() {
     return <SpinnerLoading />;
   }
 
+  const httpError =
+    loadingBookError ||
+    loadingReviewError ||
+    loadingBookCheckedOutError ||
+    loadingCurrentLoansCountError ||
+    loadingUserReviewError;
+
   if (httpError) {
     return (
       <div className="container m-5">
-        <p>{httpError}</p>
+        <p>{httpError.message}</p>
       </div>
     );
   }
@@ -203,7 +249,7 @@ export default function BookCheckout() {
     if (!checkoutResponse.ok) {
       throw new Error('Something went wrong!');
     }
-    setIsCheckedOut(true);
+    // setIsCheckedOut(true);
   }
 
   async function submitReview(starInput: number, reviewDescription: string) {
@@ -224,7 +270,7 @@ export default function BookCheckout() {
     if (!returnResponse.ok) {
       throw new Error('Something went wrong!');
     }
-    setIsReviewLeft(true);
+    // setIsReviewLeft(true);
   }
 
   return (
@@ -237,7 +283,7 @@ export default function BookCheckout() {
               <Image src={book?.img} width="226" height="349" alt="Book" />
             ) : (
               <Image
-                src="images/BookImages/book-luv2code-1000.png"
+                src="/images/BookImages/book-luv2code-1000.png"
                 width="226"
                 height="349"
                 alt="Book"
@@ -249,7 +295,7 @@ export default function BookCheckout() {
               <h2>{book?.title}</h2>
               <h5 className="text-primary">{book?.author}</h5>
               <p className="lead">{book?.description}</p>
-              <StarsReview rating={totalStars} size={32} />
+              <StarsReview ratingProp={totalStars} size={32} />
             </div>
           </div>
           <CheckoutAndReviewBox
@@ -272,7 +318,7 @@ export default function BookCheckout() {
             <Image src={book?.img} width="226" height="349" alt="Book" />
           ) : (
             <Image
-              src="images/BookImages/book-luv2code-1000.png"
+              src="/images/BookImages/book-luv2code-1000.png"
               width="226"
               height="349"
               alt="Book"
@@ -284,7 +330,7 @@ export default function BookCheckout() {
             <h2>{book?.title}</h2>
             <h5 className="text-primary">{book?.author}</h5>
             <p className="lead">{book?.description}</p>
-            <StarsReview rating={totalStars} size={32} />
+            <StarsReview ratingProp={totalStars} size={32} />
           </div>
         </div>
         <CheckoutAndReviewBox

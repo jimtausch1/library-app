@@ -3,16 +3,21 @@
 import MessageModel from '@/models/MessageModel';
 import { useState } from 'react';
 
-const AdminMessage: React.FC<{
+interface AdminMessageProps {
   message: MessageModel;
   submitResponseToQuestion: any;
-}> = (props, key) => {
+}
+
+export default function AdminMessage({
+  message,
+  submitResponseToQuestion,
+}: AdminMessageProps) {
   const [displayWarning, setDisplayWarning] = useState(false);
   const [response, setResponse] = useState('');
 
   function submitBtn() {
-    if (props.message.id !== null && response !== '') {
-      props.submitResponseToQuestion(props.message.id, response);
+    if (message.id !== null && response !== '') {
+      submitResponseToQuestion(message.id, response);
       setDisplayWarning(false);
     } else {
       setDisplayWarning(true);
@@ -20,13 +25,13 @@ const AdminMessage: React.FC<{
   }
 
   return (
-    <div key={props.message.id}>
+    <div key={message.id}>
       <div className="card mt-2 shadow p-3 bg-body rounded">
         <h5>
-          Case #{props.message.id}: {props.message.title}
+          Case #{message.id}: {message.title}
         </h5>
-        <h6>{props.message.userEmail}</h6>
-        <p>{props.message.question}</p>
+        <h6>{message.userEmail}</h6>
+        <p>{message.question}</p>
         <hr />
         <div>
           <h5>Response: </h5>
@@ -60,6 +65,4 @@ const AdminMessage: React.FC<{
       </div>
     </div>
   );
-};
-
-export default AdminMessage;
+}

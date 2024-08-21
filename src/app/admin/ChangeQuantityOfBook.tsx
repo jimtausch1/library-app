@@ -76,7 +76,7 @@ const ChangeQuantityOfBook: React.FC<ChangeQuantityOfBookProps> = ({
               <Image src={book.img} width="123" height="196" alt="Book" />
             ) : (
               <Image
-                src="images/BookImages/book-luv2code-1000.png"
+                src="/images/BookImages/book-luv2code-1000.png"
                 width="123"
                 height="196"
                 alt="Book"
@@ -88,7 +88,7 @@ const ChangeQuantityOfBook: React.FC<ChangeQuantityOfBookProps> = ({
               <Image src={book.img} width="123" height="196" alt="Book" />
             ) : (
               <Image
-                src="images/BookImages/book-luv2code-1000.png"
+                src="/images/BookImages/book-luv2code-1000.png"
                 width="123"
                 height="196"
                 alt="Book"

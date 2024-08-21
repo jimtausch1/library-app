@@ -1,8 +1,8 @@
 'use client';
 
-import { redirect } from 'next/navigation';
+import { SpinnerLoading } from '@/components/spinner/SpinnerLoading';
 import { useOktaAuth } from '@okta/okta-react';
-import { SpinnerLoading } from '../../components/spinner/SpinnerLoading';
+import { redirect } from 'next/navigation';
 import OktaSignInWidget from './OktaSignInWidget';
 
 const LoginWidget = ({ config }) => {

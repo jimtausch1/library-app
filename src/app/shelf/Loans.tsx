@@ -96,7 +96,7 @@ const Loans = () => {
                       />
                     ) : (
                       <Image
-                        src="images/BookImages/book-luv2code-1000.png"
+                        src="/images/BookImages/book-luv2code-1000.png"
                         width="226"
                         height="349"
                         alt="Book"
@@ -188,7 +188,7 @@ const Loans = () => {
                     />
                   ) : (
                     <Image
-                      src="images/BookImages/book-luv2code-1000.png"
+                      src="/images/BookImages/book-luv2code-1000.png"
                       width="226"
                       height="349"
                       alt="Book"

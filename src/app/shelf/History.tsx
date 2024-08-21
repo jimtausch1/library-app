@@ -77,7 +77,7 @@ const History = () => {
                         />
                       ) : (
                         <Image
-                          src="images/BookImages/book-luv2code-1000.png"
+                          src="/images/BookImages/book-luv2code-1000.png"
                           width="123"
                           height="196"
                           alt="Default"
@@ -94,7 +94,7 @@ const History = () => {
                         />
                       ) : (
                         <Image
-                          src="images/BookImages/book-luv2code-1000.png"
+                          src="/images/BookImages/book-luv2code-1000.png"
                           width="123"
                           height="196"
                           alt="Default"

@@ -5,7 +5,7 @@ export interface LeaveAReviewProps {
   submitReview: any;
 }
 
-export default function LeaveAReview(props: LeaveAReviewProps) {
+export default function LeaveAReview({ submitReview }: LeaveAReviewProps) {
   const [starInput, setStarInput] = useState(0);
   const [displayInput, setDisplayInput] = useState(false);
   const [reviewDescription, setReviewDescription] = useState('');
@@ -85,7 +85,7 @@ export default function LeaveAReview(props: LeaveAReviewProps) {
           </button>
         </li>
       </ul>
-      <StarsReview rating={starInput} size={32} />
+      <StarsReview ratingProp={starInput} size={32} />
 
       {displayInput && (
         <form method="POST" action="#">
@@ -105,7 +105,7 @@ export default function LeaveAReview(props: LeaveAReviewProps) {
           <div>
             <button
               type="button"
-              onClick={() => props.submitReview(starInput, reviewDescription)}
+              onClick={() => submitReview(starInput, reviewDescription)}
               className="btn btn-primary mt-3"
             >
               Submit Review
