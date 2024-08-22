@@ -7,8 +7,10 @@ import { useBooks } from '@/hooks/useBooks';
 import BookModel from '@/models/BookModel';
 import ReturnBook from './ReturnBook';
 
-const Carousel = () => {
-  const { data: books, isLoading, error } = useBooks();
+export default function Carousel() {
+  const { data, isLoading, error } = useBooks();
+
+  const books = data?.responseData;
 
   if (isLoading) {
     return <SpinnerLoading />;
@@ -96,6 +98,4 @@ const Carousel = () => {
       </div>
     </div>
   );
-};
-
-export default Carousel;
+}

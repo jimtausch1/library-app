@@ -2,14 +2,15 @@ import { loadBooks } from "@/lib/features/books/books";
 import { useAppDispatch } from '@/lib/hooks';
 import { useQuery } from "@tanstack/react-query";
 
-export function useBooks() {
+export function useBooks(currentPage: number = 0, booksPerPage: number = 9) {
   const dispatch = useAppDispatch();
 
   return useQuery({
-    queryKey: ['books'],
+    queryKey: ['books', currentPage, booksPerPage],
     queryFn: async () => {
-      const baseUrl: string = 'http://localhost:8080/api/books';
-      const url: string = `${baseUrl}?page=0&size=9`;
+      const baseUrl = 'http://localhost:8080/api/books';
+      const currentPageParam = currentPage > 0 ? currentPage - 1 : currentPage;
+      const url = `${baseUrl}?page=${currentPageParam}&size=${booksPerPage}`;
 
       const response = await fetch(url);
       if (!response.ok) {
@@ -21,7 +22,10 @@ export function useBooks() {
 
       dispatch(loadBooks(responseData));
 
-      return responseData;
+      const totalElements = responseJson.page.totalElements;
+      const totalPages = responseJson.page.totalPages;
+
+      return { responseData, totalElements, totalPages };
     }
   });
 }

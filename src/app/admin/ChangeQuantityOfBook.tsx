@@ -9,10 +9,10 @@ interface ChangeQuantityOfBookProps {
   deleteBook: Function;
 }
 
-const ChangeQuantityOfBook: React.FC<ChangeQuantityOfBookProps> = ({
+export default function ChangeQuantityOfBook({
   book,
   deleteBook,
-}) => {
+}: ChangeQuantityOfBookProps) {
   const [quantity, setQuantity] = useState<number>(0);
   const [remaining, setRemaining] = useState<number>(0);
 
@@ -138,6 +138,4 @@ const ChangeQuantityOfBook: React.FC<ChangeQuantityOfBookProps> = ({
       </div>
     </div>
   );
-};
-
-export default ChangeQuantityOfBook;
+}
