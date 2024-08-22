@@ -1,19 +1,21 @@
-import { QueryFunctionContext, useQuery } from "@tanstack/react-query";
+import { useAppSelector } from '@/lib/hooks';
 import { useUser } from '@auth0/nextjs-auth0/client';
+import { QueryFunctionContext, useQuery } from "@tanstack/react-query";
 
-export function useCurrentLoansCount(checkout: boolean) {
+export function useCurrentLoansCount() {
   const { user } = useUser();
   const isAuthenticated = user !== undefined;
+  const isCheckedOut = useAppSelector((state) => state.checkedout.ischeckedout);
 
   return useQuery({
-    queryKey: ['currentLoansCount', { checkout, isAuthenticated }],
+    queryKey: ['currentLoansCount', { isCheckedOut, isAuthenticated }],
     queryFn: async ({
       queryKey,
     }: QueryFunctionContext<[string, {
-      checkout: boolean,
+      isCheckedOut: boolean,
       isAuthenticated: boolean,
     }]>) => {
-      const [_key, { checkout, isAuthenticated }] = queryKey;
+      const [_key, { isCheckedOut, isAuthenticated }] = queryKey;
 
       if (isAuthenticated) {
         const shelfCurrentLoansResponse = await fetch(

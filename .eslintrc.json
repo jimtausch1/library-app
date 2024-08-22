@@ -1,6 +1,18 @@
 {
   "extends": [
+    "plugin:import/recommended",
     "next/core-web-vitals",
     "plugin:@tanstack/eslint-plugin-query/recommended"
-  ]
+  ],
+  "plugins": [
+    "import"
+  ],
+  "rules": {
+    "complexity": [
+      "error",
+      {
+        "max": 15
+      }
+    ]
+  }
 }

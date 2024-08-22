@@ -1,6 +1,10 @@
+import { loadBooks } from "@/lib/features/books/books";
+import { useAppDispatch } from '@/lib/hooks';
 import { useQuery } from "@tanstack/react-query";
 
 export function useBooks() {
+  const dispatch = useAppDispatch();
+
   return useQuery({
     queryKey: ['books'],
     queryFn: async () => {
@@ -14,6 +18,9 @@ export function useBooks() {
 
       const responseJson = await response.json();
       const responseData = responseJson._embedded.books;
+
+      dispatch(loadBooks(responseData));
+
       return responseData;
     }
   });

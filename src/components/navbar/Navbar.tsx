@@ -1,11 +1,22 @@
 'use client';
 
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { default as Link, default as NavLink } from 'next/link';
+import { useEffect } from 'react';
+import { changeIsAuthenticated } from '../../lib/features/auth/auth';
 import { SpinnerLoading } from '../spinner/SpinnerLoading';
 
 const Navbar = () => {
   const { user, error, isLoading } = useUser();
+  const isUser = user !== undefined;
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(changeIsAuthenticated(isUser));
+  }, [dispatch, isUser]);
+
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
 
   if (isLoading) {
     return <SpinnerLoading />;
@@ -18,7 +29,9 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark main-color py-3">
       <div className="container-fluid">
-        <span className="navbar-brand">Luv 2 Read</span>
+        <a className="navbar-brand" href="/">
+          Luv 2 Read
+        </a>
         <button
           className="navbar-toggler"
           type="button"

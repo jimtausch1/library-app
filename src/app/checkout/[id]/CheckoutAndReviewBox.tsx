@@ -1,13 +1,14 @@
 import LeaveAReview from '@/app/reviewlist/[id]/LeaveAReview';
+import { SpinnerLoading } from '@/components/spinner/SpinnerLoading';
+import { useCurrentLoansCount } from '@/hooks/useCurrentLoanCount';
+import { useAppSelector } from '@/lib/hooks';
 import BookModel from '@/models/BookModel';
 import Link from 'next/link';
 
 export interface CheckoutAndReviewBoxProps {
   book: BookModel | undefined;
   mobile: boolean;
-  currentLoansCount: number;
   isAuthenticated: boolean;
-  isCheckedOut: boolean;
   checkoutBook: Function;
   isReviewLeft: boolean;
   submitReview: Function;
@@ -16,9 +17,7 @@ export interface CheckoutAndReviewBoxProps {
 export default function CheckoutAndReviewBox({
   book,
   mobile,
-  currentLoansCount,
   isAuthenticated,
-  isCheckedOut,
   checkoutBook,
   isReviewLeft,
   submitReview,
@@ -65,6 +64,26 @@ export default function CheckoutAndReviewBox({
       <div>
         <hr />
         <p>Sign in to be able to leave a review.</p>
+      </div>
+    );
+  }
+
+  const isCheckedOut = useAppSelector((state) => state.checkedout.ischeckedout);
+
+  const {
+    data: currentLoansCount,
+    isLoading: isLoadingCurrentLoansCount,
+    error: loadingCurrentLoansCountError,
+  } = useCurrentLoansCount();
+
+  if (isLoadingCurrentLoansCount) {
+    return <SpinnerLoading />;
+  }
+
+  if (loadingCurrentLoansCountError) {
+    return (
+      <div className="container m-5">
+        <p>{loadingCurrentLoansCountError.message}</p>
       </div>
     );
   }

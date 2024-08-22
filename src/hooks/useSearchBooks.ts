@@ -2,7 +2,7 @@ import { QueryFunctionContext, useQuery } from "@tanstack/react-query";
 
 export function useSearchBooks(searchUrl: string, currentPage: number, booksPerPage: number) {
   return useQuery({
-    queryKey: ['books', {
+    queryKey: ['searchBooks', {
       searchUrl: searchUrl,
       currentPage: currentPage,
       booksPerPage: booksPerPage,

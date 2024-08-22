@@ -4,21 +4,25 @@ import StarsReview from '@/app/reviewlist/[id]/StarsReview';
 import { SpinnerLoading } from '@/components/spinner/SpinnerLoading';
 import { useBookById } from '@/hooks/useBookById';
 import { useBookReviews } from '@/hooks/useBookReviews';
-import { useCurrentLoansCount } from '@/hooks/useCurrentLoanCount';
-import { useUserCheckedOut } from '@/hooks/useUserCheckedOut';
+// import { useCurrentLoansCount } from '@/hooks/useCurrentLoanCount';
+import { useCheckedOut } from '@/hooks/useCheckedOut';
 import { useUserReview } from '@/hooks/useUserReview';
+import { changeIsCheckedOut } from '@/lib/features/checkedout/checkedout';
+import { useAppDispatch } from '@/lib/hooks';
 import ReviewRequestModel from '@/models/ReviewRequestModel';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
+import { useState } from 'react';
 import CheckoutAndReviewBox from './CheckoutAndReviewBox';
 import LatestReviews from './LatestReviews';
 
 export default function BookCheckout() {
   const { user } = useUser();
+  const dispatch = useAppDispatch();
   // const [book, setBook] = useState<BookModel>();
   // const [isLoadingBook, setIsLoadingBook] = useState(true);
-  // const [httpError, setHttpError] = useState(null);
+  const [httpError, setHttpError] = useState(null);
 
   // Review State
   // const [reviews, setReviews] = useState<ReviewModel[]>([]);
@@ -33,32 +37,21 @@ export default function BookCheckout() {
   // const [isLoadingCurrentLoansCount, setIsLoadingCurrentLoansCount] =
   //   useState(true);
 
-  // Is Book Check Out?
-  // const [isCheckedOut, setIsCheckedOut] = useState(false);
-  // const [isLoadingBookCheckedOut, setIsLoadingBookCheckedOut] = useState(true);
-
   const params = useParams<{ id: string }>();
-  // console.log(`isCheckedOut: ${isCheckedOut}`);
 
   const isAuthenticated = user !== undefined;
 
   const {
     data: isCheckedOut,
-    isLoading: isLoadingBookCheckedOut,
-    error: loadingBookCheckedOutError,
-  } = useUserCheckedOut(params.id);
-
-  const {
-    data: currentLoansCount,
-    isLoading: isLoadingCurrentLoansCount,
-    error: loadingCurrentLoansCountError,
-  } = useCurrentLoansCount(isCheckedOut);
+    isLoading: isLoadingCheckedOut,
+    error: loadingCheckedOutError,
+  } = useCheckedOut(params.id);
 
   const {
     data: book,
     isLoading: isLoadingBook,
     error: loadingBookError,
-  } = useBookById(params.id, isCheckedOut);
+  } = useBookById(params.id);
 
   const {
     data,
@@ -74,42 +67,6 @@ export default function BookCheckout() {
     isLoading: isLoadingUserReview,
     error: loadingUserReviewError,
   } = useUserReview(params.id);
-
-  // useEffect(() => {
-  //   setIsCheckedOut(isCheckedOutResult);
-  // }, [isCheckedOutResult]);
-
-  // useEffect(() => {
-  //   const fetchBook = async () => {
-  //     const baseUrl: string = `http://localhost:8080/api/books/${params.id}`;
-
-  //     const response = await fetch(baseUrl);
-
-  //     if (!response.ok) {
-  //       throw new Error('Something went wrong!');
-  //     }
-
-  //     const responseJson = await response.json();
-
-  //     const loadedBook: BookModel = {
-  //       id: responseJson.id,
-  //       title: responseJson.title,
-  //       author: responseJson.author,
-  //       description: responseJson.description,
-  //       copies: responseJson.copies,
-  //       copiesAvailable: responseJson.copiesAvailable,
-  //       category: responseJson.category,
-  //       img: responseJson.img,
-  //     };
-
-  //     setBook(loadedBook);
-  //     setIsLoadingBook(false);
-  //   };
-  //   fetchBook().catch((error: any) => {
-  //     setIsLoadingBook(false);
-  //     setHttpError(error.message);
-  //   });
-  // }, [isCheckedOut, params.id]);
 
   // useEffect(() => {
   //   const fetchBookReviews = async () => {
@@ -176,70 +133,25 @@ export default function BookCheckout() {
   //   });
   // }, [isAuthenticated, params.id]);
 
-  // useEffect(() => {
-  //   const fetchUserCurrentLoansCount = async () => {
-  //     if (isAuthenticated) {
-  //       const currentLoansCountResponse = await fetch(
-  //         `/api/secure/current-loancount`
-  //       );
-  //       if (!currentLoansCountResponse.ok) {
-  //         throw new Error('Something went wrong!');
-  //       }
-  //       const currentLoansCountResponseJson =
-  //         await currentLoansCountResponse.json();
-  //       setCurrentLoansCount(currentLoansCountResponseJson);
-  //     }
-  //     setIsLoadingCurrentLoansCount(false);
-  //   };
-  //   fetchUserCurrentLoansCount().catch((error: any) => {
-  //     setIsLoadingCurrentLoansCount(false);
-  //     setHttpError(error.message);
-  //   });
-  // }, [isAuthenticated, isCheckedOut]);
-
-  // useEffect(() => {
-  //   const fetchUserCheckedOutBook = async () => {
-  //     if (isAuthenticated) {
-  //       const bookCheckedOut = await fetch(
-  //         `/api/secure/checked-out/${params.id}`
-  //       );
-
-  //       if (!bookCheckedOut.ok) {
-  //         throw new Error('Something went wrong!');
-  //       }
-
-  //       const bookCheckedOutResponseJson = await bookCheckedOut.json();
-  //       setIsCheckedOut(bookCheckedOutResponseJson);
-  //     }
-  //     setIsLoadingBookCheckedOut(false);
-  //   };
-  //   fetchUserCheckedOutBook().catch((error: any) => {
-  //     setIsLoadingBookCheckedOut(false);
-  //     setHttpError(error.message);
-  //   });
-  // }, [isAuthenticated, params.id]);
-
   if (
     isLoadingBook ||
     isLoadingReview ||
-    isLoadingCurrentLoansCount ||
-    isLoadingBookCheckedOut ||
+    isLoadingCheckedOut ||
     isLoadingUserReview
   ) {
     return <SpinnerLoading />;
   }
 
-  const httpError =
-    loadingBookError ||
-    loadingReviewError ||
-    loadingBookCheckedOutError ||
-    loadingCurrentLoansCountError ||
-    loadingUserReviewError;
+  // const httpError =
+  //   loadingBookError ||
+  //   loadingReviewError ||
+  //   loadingBookCheckedOutError ||
+  //   loadingUserReviewError;
 
   if (httpError) {
     return (
       <div className="container m-5">
-        <p>{httpError.message}</p>
+        <p>{httpError}</p>
       </div>
     );
   }
@@ -249,7 +161,7 @@ export default function BookCheckout() {
     if (!checkoutResponse.ok) {
       throw new Error('Something went wrong!');
     }
-    // setIsCheckedOut(true);
+    dispatch(changeIsCheckedOut(true));
   }
 
   async function submitReview(starInput: number, reviewDescription: string) {
@@ -279,7 +191,6 @@ export default function BookCheckout() {
         <div className="row mt-5">
           <div className="col-sm-2 col-md-2">
             {book?.img ? (
-              // <img src={book?.img} width='226' height='349' alt='Book' />
               <Image src={book?.img} width="226" height="349" alt="Book" />
             ) : (
               <Image
@@ -301,9 +212,8 @@ export default function BookCheckout() {
           <CheckoutAndReviewBox
             book={book}
             mobile={false}
-            currentLoansCount={currentLoansCount}
+            // currentLoansCount={currentLoansCount}
             isAuthenticated={isAuthenticated}
-            isCheckedOut={isCheckedOut}
             checkoutBook={checkoutBook}
             isReviewLeft={isReviewLeft}
             submitReview={submitReview}
@@ -336,9 +246,8 @@ export default function BookCheckout() {
         <CheckoutAndReviewBox
           book={book}
           mobile={true}
-          currentLoansCount={currentLoansCount}
+          // currentLoansCount={currentLoansCount}
           isAuthenticated={isAuthenticated}
-          isCheckedOut={isCheckedOut}
           checkoutBook={checkoutBook}
           isReviewLeft={isReviewLeft}
           submitReview={submitReview}
