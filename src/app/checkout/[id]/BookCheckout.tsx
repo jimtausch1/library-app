@@ -4,25 +4,19 @@ import StarsReview from '@/app/reviewlist/[id]/StarsReview';
 import { SpinnerLoading } from '@/components/spinner/SpinnerLoading';
 import { useBookById } from '@/hooks/useBookById';
 import { useBookReviews } from '@/hooks/useBookReviews';
-// import { useCurrentLoansCount } from '@/hooks/useCurrentLoanCount';
 import { useCheckedOut } from '@/hooks/useCheckedOut';
 import { useUserReview } from '@/hooks/useUserReview';
 import { changeIsCheckedOut } from '@/lib/features/checkedout/checkedout';
-import { useAppDispatch } from '@/lib/hooks';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import ReviewRequestModel from '@/models/ReviewRequestModel';
-import { useUser } from '@auth0/nextjs-auth0/client';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
-import { useState } from 'react';
 import CheckoutAndReviewBox from './CheckoutAndReviewBox';
 import LatestReviews from './LatestReviews';
 
 export default function BookCheckout() {
-  const { user } = useUser();
   const dispatch = useAppDispatch();
-  // const [book, setBook] = useState<BookModel>();
-  // const [isLoadingBook, setIsLoadingBook] = useState(true);
-  const [httpError, setHttpError] = useState(null);
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
 
   // Review State
   // const [reviews, setReviews] = useState<ReviewModel[]>([]);
@@ -38,8 +32,6 @@ export default function BookCheckout() {
   //   useState(true);
 
   const params = useParams<{ id: string }>();
-
-  const isAuthenticated = user !== undefined;
 
   const {
     data: isCheckedOut,
@@ -142,16 +134,16 @@ export default function BookCheckout() {
     return <SpinnerLoading />;
   }
 
-  // const httpError =
-  //   loadingBookError ||
-  //   loadingReviewError ||
-  //   loadingBookCheckedOutError ||
-  //   loadingUserReviewError;
+  const httpError =
+    loadingBookError ||
+    loadingReviewError ||
+    loadingCheckedOutError ||
+    loadingUserReviewError;
 
   if (httpError) {
     return (
       <div className="container m-5">
-        <p>{httpError}</p>
+        <p>{httpError.message}</p>
       </div>
     );
   }
@@ -213,7 +205,6 @@ export default function BookCheckout() {
             book={book}
             mobile={false}
             // currentLoansCount={currentLoansCount}
-            isAuthenticated={isAuthenticated}
             checkoutBook={checkoutBook}
             isReviewLeft={isReviewLeft}
             submitReview={submitReview}
@@ -247,7 +238,6 @@ export default function BookCheckout() {
           book={book}
           mobile={true}
           // currentLoansCount={currentLoansCount}
-          isAuthenticated={isAuthenticated}
           checkoutBook={checkoutBook}
           isReviewLeft={isReviewLeft}
           submitReview={submitReview}

@@ -1,15 +1,15 @@
 'use client';
 
 import { SpinnerLoading } from '@/components/spinner/SpinnerLoading';
+import { useAppSelector } from '@/lib/hooks';
 import ShelfCurrentLoans from '@/models/ShelfCurrentLoans';
-import { useUser } from '@auth0/nextjs-auth0/client';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import LoansModal from './LoansModal';
 
 const Loans = () => {
-  const { user } = useUser();
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   const [httpError, setHttpError] = useState(null);
 
   // Current Loans
@@ -18,8 +18,6 @@ const Loans = () => {
   >([]);
   const [isLoadingUserLoans, setIsLoadingUserLoans] = useState(true);
   const [checkout, setCheckout] = useState(false);
-
-  const isAuthenticated = user !== undefined;
 
   useEffect(() => {
     const fetchUserCurrentLoans = async () => {

@@ -1,10 +1,8 @@
 import { useAppSelector } from '@/lib/hooks';
-import { useUser } from '@auth0/nextjs-auth0/client';
 import { QueryFunctionContext, useQuery } from "@tanstack/react-query";
 
 export function useCurrentLoansCount() {
-  const { user } = useUser();
-  const isAuthenticated = user !== undefined;
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   const isCheckedOut = useAppSelector((state) => state.checkedout.ischeckedout);
 
   return useQuery({

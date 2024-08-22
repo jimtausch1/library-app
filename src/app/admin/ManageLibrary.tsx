@@ -1,20 +1,18 @@
 'use client';
 
-import { useUser } from '@auth0/nextjs-auth0/client';
+import { useAppSelector } from '@/lib/hooks';
 import { redirect } from 'next/navigation';
 import { useState } from 'react';
-import AdminMessages from './AdminMessages';
 import AddNewBook from './AddNewBook';
+import AdminMessages from './AdminMessages';
 import ChangeQuantityOfBooks from './ChangeQuantityOfBooks';
 
 const ManageLibrary = () => {
-  const { user } = useUser();
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
 
   const [changeQuantityOfBooksClick, setChangeQuantityOfBooksClick] =
     useState(false);
   const [messagesClick, setMessagesClick] = useState(false);
-
-  const isAuthenticated = user !== undefined;
 
   function addBookClickFunction() {
     setChangeQuantityOfBooksClick(false);

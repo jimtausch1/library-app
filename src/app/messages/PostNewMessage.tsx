@@ -1,23 +1,21 @@
 'use client';
 
+import { useAppSelector } from '@/lib/hooks';
 import MessageModel from '@/models/MessageModel';
-import { useUser } from '@auth0/nextjs-auth0/client';
 import { useState } from 'react';
 
 const PostNewMessage = () => {
-  const { user } = useUser();
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   const [title, setTitle] = useState('');
   const [question, setQuestion] = useState('');
   const [displayWarning, setDisplayWarning] = useState(false);
   const [displaySuccess, setDisplaySuccess] = useState(false);
 
-  const isAuthenticated = user !== undefined;
-
   async function submitNewQuestion() {
     if (isAuthenticated && title !== '' && question !== '') {
       const messageRequestModel: MessageModel = new MessageModel(
         title,
-        question,
+        question
       );
 
       const submitNewQuestionResponse = await fetch(`/api/secure/message-add`, {

@@ -2,12 +2,12 @@
 
 import Pagination from '@/components/pagination/Pagination';
 import { SpinnerLoading } from '@/components/spinner/SpinnerLoading';
+import { useAppSelector } from '@/lib/hooks';
 import MessageModel from '@/models/MessageModel';
-import { useUser } from '@auth0/nextjs-auth0/client';
 import { useEffect, useState } from 'react';
 
 const Messages = () => {
-  const { user } = useUser();
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   const [isLoadingMessages, setIsLoadingMessages] = useState(true);
   const [httpError, setHttpError] = useState(null);
 
@@ -18,8 +18,6 @@ const Messages = () => {
   const [messagesPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-
-  const isAuthenticated = user !== undefined;
 
   useEffect(() => {
     const fetchUserMessages = async () => {

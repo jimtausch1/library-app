@@ -1,13 +1,13 @@
 import Pagination from '@/components/pagination/Pagination';
 import { SpinnerLoading } from '@/components/spinner/SpinnerLoading';
+import { useAppSelector } from '@/lib/hooks';
 import HistoryModel from '@/models/HistoryModel';
-import { useUser } from '@auth0/nextjs-auth0/client';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 const History = () => {
-  const { user } = useUser();
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   const [isLoadingHistory, setIsLoadingHistory] = useState(true);
   const [httpError, setHttpError] = useState(null);
 
@@ -17,8 +17,6 @@ const History = () => {
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-
-  const isAuthenticated = user !== undefined;
 
   useEffect(() => {
     const fetchUserHistory = async () => {

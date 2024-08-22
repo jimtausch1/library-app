@@ -1,7 +1,6 @@
 'use client';
 
 import BookModel from '@/models/BookModel';
-import { useUser } from '@auth0/nextjs-auth0/client';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
@@ -14,7 +13,6 @@ const ChangeQuantityOfBook: React.FC<ChangeQuantityOfBookProps> = ({
   book,
   deleteBook,
 }) => {
-  const { user } = useUser();
   const [quantity, setQuantity] = useState<number>(0);
   const [remaining, setRemaining] = useState<number>(0);
 

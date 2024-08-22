@@ -1,9 +1,8 @@
-import { useUser } from '@auth0/nextjs-auth0/client';
+import { useAppSelector } from '@/lib/hooks';
 import { QueryFunctionContext, useQuery } from "@tanstack/react-query";
 
 export function useUserReview(bookId: string) {
-  const { user } = useUser();
-  const isAuthenticated = user !== undefined;
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
 
   return useQuery({
     queryKey: ['userReview', {

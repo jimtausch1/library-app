@@ -1,10 +1,10 @@
 'use client';
 
-import { useUser } from '@auth0/nextjs-auth0/client';
+import { useAppSelector } from '@/lib/hooks';
 import Link from 'next/link';
 
 const Heros = () => {
-  const { user } = useUser();
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
 
   return (
     <div>
@@ -21,7 +21,7 @@ const Heros = () => {
                 Whether it is to learn a new skill or grow within one, we will
                 be able to provide the top content for you!
               </p>
-              {user ? (
+              {isAuthenticated ? (
                 <Link
                   type="button"
                   className="btn main-color btn-lg text-white"
@@ -74,7 +74,7 @@ const Heros = () => {
                 Whether it is to learn a new skill or grow within one, we will
                 be able to provide the top content for you!
               </p>
-              {user ? (
+              {isAuthenticated ? (
                 <Link
                   type="button"
                   className="btn main-color btn-lg text-white"

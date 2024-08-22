@@ -2,14 +2,14 @@
 
 import Pagination from '@/components/pagination/Pagination';
 import { SpinnerLoading } from '@/components/spinner/SpinnerLoading';
+import { useAppSelector } from '@/lib/hooks';
 import AdminMessageRequest from '@/models/AdminMessageRequest';
 import MessageModel from '@/models/MessageModel';
-import { useUser } from '@auth0/nextjs-auth0/client';
 import { useEffect, useState } from 'react';
 import AdminMessage from './AdminMessage';
 
 const AdminMessages = () => {
-  const { user } = useUser();
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
 
   // Normal Loading Pieces
   const [isLoadingMessages, setIsLoadingMessages] = useState(true);
@@ -25,8 +25,6 @@ const AdminMessages = () => {
 
   // Recall useEffect
   const [btnSubmit, setBtnSubmit] = useState(false);
-
-  const isAuthenticated = user !== undefined;
 
   useEffect(() => {
     const fetchUserMessages = async () => {

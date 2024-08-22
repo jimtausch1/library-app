@@ -8,7 +8,6 @@ import Link from 'next/link';
 export interface CheckoutAndReviewBoxProps {
   book: BookModel | undefined;
   mobile: boolean;
-  isAuthenticated: boolean;
   checkoutBook: Function;
   isReviewLeft: boolean;
   submitReview: Function;
@@ -17,7 +16,6 @@ export interface CheckoutAndReviewBoxProps {
 export default function CheckoutAndReviewBox({
   book,
   mobile,
-  isAuthenticated,
   checkoutBook,
   isReviewLeft,
   submitReview,
@@ -68,6 +66,7 @@ export default function CheckoutAndReviewBox({
     );
   }
 
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   const isCheckedOut = useAppSelector((state) => state.checkedout.ischeckedout);
 
   const {

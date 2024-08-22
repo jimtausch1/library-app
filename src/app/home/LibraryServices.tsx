@@ -1,10 +1,10 @@
 'use client';
 
-import { useUser } from '@auth0/nextjs-auth0/client';
+import { useAppSelector } from '@/lib/hooks';
 import Link from 'next/link';
 
 const LibraryServices = () => {
-  const { user } = useUser();
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
 
   return (
     <div className="container my-5">
@@ -18,7 +18,7 @@ const LibraryServices = () => {
             admin&lsquo;s a personal message!
           </p>
           <div className="d-grid gap-2 justify-content-md-start mb-4 mb-lg-3">
-            {user ? (
+            {isAuthenticated ? (
               <Link
                 href="/messages"
                 type="button"

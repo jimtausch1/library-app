@@ -1,11 +1,11 @@
 'use client';
 
+import { useAppSelector } from '@/lib/hooks';
 import AddBookRequest from '@/models/AddBookRequest';
-import { useUser } from '@auth0/nextjs-auth0/client';
 import { useState } from 'react';
 
 const AddNewBook = () => {
-  const { user } = useUser();
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
 
   // New Book
   const [title, setTitle] = useState('');
@@ -18,8 +18,6 @@ const AddNewBook = () => {
   // Displays
   const [displayWarning, setDisplayWarning] = useState(false);
   const [displaySuccess, setDisplaySuccess] = useState(false);
-
-  const isAuthenticated = user !== undefined;
 
   function categoryField(value: string) {
     setCategory(value);

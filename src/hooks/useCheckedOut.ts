@@ -1,13 +1,11 @@
 import { changeIsCheckedOut } from "@/lib/features/checkedout/checkedout";
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
-import { useUser } from '@auth0/nextjs-auth0/client';
 import { QueryFunctionContext, useQuery } from "@tanstack/react-query";
 
 export function useCheckedOut(bookId: string) {
-  const { user } = useUser();
-  const dispatch = useAppDispatch();
-  const isAuthenticated = user !== undefined;
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   const isCheckedOut = useAppSelector((state) => state.checkedout.ischeckedout);
+  const dispatch = useAppDispatch();
 
   return useQuery({
     queryKey: ['userCheckedOut', {

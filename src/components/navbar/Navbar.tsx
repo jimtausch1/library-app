@@ -1,6 +1,6 @@
 'use client';
 
-import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { useAppDispatch } from '@/lib/hooks';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { default as Link, default as NavLink } from 'next/link';
 import { useEffect } from 'react';
@@ -16,7 +16,7 @@ const Navbar = () => {
     dispatch(changeIsAuthenticated(isUser));
   }, [dispatch, isUser]);
 
-  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+  const isAuthenticated = user !== undefined;
 
   if (isLoading) {
     return <SpinnerLoading />;
@@ -55,7 +55,7 @@ const Navbar = () => {
                 Search Books
               </NavLink>
             </li>
-            {user && (
+            {isAuthenticated && (
               <li className="nav-item">
                 <NavLink className="nav-link" href="/shelf">
                   Shelf
@@ -63,7 +63,7 @@ const Navbar = () => {
               </li>
             )}
             {/* {user && user. authState.accessToken?.claims?.userType === 'admin' && */}
-            {user && (
+            {isAuthenticated && (
               <li className="nav-item">
                 <NavLink className="nav-link" href="/admin">
                   Admin
@@ -72,7 +72,7 @@ const Navbar = () => {
             )}
           </ul>
           <ul className="navbar-nav ms-auto">
-            {!user ? (
+            {!isAuthenticated ? (
               <li className="nav-item m-1">
                 <Link
                   type="button"
