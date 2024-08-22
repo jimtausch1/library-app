@@ -4,6 +4,9 @@ import { BookByIdSlice } from './features/bookbyid/bookbyid'
 // import { booksApi } from './features/books/api'
 import { BooksSlice } from './features/books/books'
 import { CheckedOutSlice } from './features/checkedout/checkedout'
+import { ReviewLeftSlice } from './features/reviewleft/reviewleft'
+import { ReviewsSlice } from './features/reviews/reviews'
+import { TotalStarsSlice } from './features/totalstars/totalstars'
 
 export const makeStore = () => {
   return configureStore({
@@ -12,6 +15,9 @@ export const makeStore = () => {
       books: BooksSlice.reducer,
       bookbyid: BookByIdSlice.reducer,
       checkedout: CheckedOutSlice.reducer,
+      reviewleft: ReviewLeftSlice.reducer,
+      reviews: ReviewsSlice.reducer,
+      totalstars: TotalStarsSlice.reducer,
       // [booksApi.reducerPath]: booksApi.reducer,
     },
     // middleware: (getDefaultMiddleware) =>

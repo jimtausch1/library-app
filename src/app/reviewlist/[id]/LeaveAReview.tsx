@@ -85,7 +85,7 @@ export default function LeaveAReview({ submitReview }: LeaveAReviewProps) {
           </button>
         </li>
       </ul>
-      <StarsReview ratingProp={starInput} size={32} />
+      <StarsReview stars={starInput} size={32} />
 
       {displayInput && (
         <form method="POST" action="#">

@@ -1,15 +1,12 @@
 export interface StarsReviewProps {
-  ratingProp: number;
+  stars: number;
   size: number;
 }
 
-export default function StarsReview({ ratingProp, size }: StarsReviewProps) {
-  let rating = ratingProp;
-
+export default function StarsReview({ stars, size }: StarsReviewProps) {
+  let rating = stars;
   let fullStars = 0;
-
   let halfStars = 0;
-
   let emptyStars = 0;
 
   if (rating !== undefined && rating > 0 && rating <= 5) {

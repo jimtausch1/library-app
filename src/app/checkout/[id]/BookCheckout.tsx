@@ -5,39 +5,17 @@ import { SpinnerLoading } from '@/components/spinner/SpinnerLoading';
 import { useBookById } from '@/hooks/useBookById';
 import { useBookReviews } from '@/hooks/useBookReviews';
 import { useCheckedOut } from '@/hooks/useCheckedOut';
-import { useUserReview } from '@/hooks/useUserReview';
-import { changeIsCheckedOut } from '@/lib/features/checkedout/checkedout';
-import { useAppDispatch, useAppSelector } from '@/lib/hooks';
-import ReviewRequestModel from '@/models/ReviewRequestModel';
+import { useAppSelector } from '@/lib/hooks';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import CheckoutAndReviewBox from './CheckoutAndReviewBox';
 import LatestReviews from './LatestReviews';
 
 export default function BookCheckout() {
-  const dispatch = useAppDispatch();
-  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
-
-  // Review State
-  // const [reviews, setReviews] = useState<ReviewModel[]>([]);
-  // const [totalStars, setTotalStars] = useState(0);
-  // const [isLoadingReview, setIsLoadingReview] = useState(true);
-
-  // const [isReviewLeft, setIsReviewLeft] = useState(false);
-  // const [isLoadingUserReview, setIsLoadingUserReview] = useState(true);
-
-  // Loans Count State
-  // const [currentLoansCount, setCurrentLoansCount] = useState(0);
-  // const [isLoadingCurrentLoansCount, setIsLoadingCurrentLoansCount] =
-  //   useState(true);
-
   const params = useParams<{ id: string }>();
 
-  const {
-    data: isCheckedOut,
-    isLoading: isLoadingCheckedOut,
-    error: loadingCheckedOutError,
-  } = useCheckedOut(params.id);
+  const { isLoading: isLoadingCheckedOut, error: loadingCheckedOutError } =
+    useCheckedOut(params.id);
 
   const {
     data: book,
@@ -45,100 +23,17 @@ export default function BookCheckout() {
     error: loadingBookError,
   } = useBookById(params.id);
 
-  const {
-    data,
-    isLoading: isLoadingReview,
-    error: loadingReviewError,
-  } = useBookReviews(params.id);
+  const { isLoading: isLoadingReview, error: loadingReviewError } =
+    useBookReviews(params.id);
 
-  const reviews = data?.loadedReviews ?? [];
-  const totalStars = data?.totalStars ?? 0;
+  const totalStars = useAppSelector((state) => state.totalstars.totalstars);
 
-  const {
-    data: isReviewLeft,
-    isLoading: isLoadingUserReview,
-    error: loadingUserReviewError,
-  } = useUserReview(params.id);
-
-  // useEffect(() => {
-  //   const fetchBookReviews = async () => {
-  //     const reviewUrl: string = `http://localhost:8080/api/reviews/search/findByBookId?bookId=${params.id}`;
-
-  //     const responseReviews = await fetch(reviewUrl);
-
-  //     if (!responseReviews.ok) {
-  //       throw new Error('Something went wrong!');
-  //     }
-
-  //     const responseJsonReviews = await responseReviews.json();
-
-  //     const responseData = responseJsonReviews._embedded.reviews;
-
-  //     const loadedReviews: ReviewModel[] = [];
-
-  //     let weightedStarReviews: number = 0;
-
-  //     for (const key in responseData) {
-  //       loadedReviews.push({
-  //         id: responseData[key].id,
-  //         userEmail: responseData[key].userEmail,
-  //         date: responseData[key].date,
-  //         rating: responseData[key].rating,
-  //         book_id: responseData[key].bookId,
-  //         reviewDescription: responseData[key].reviewDescription,
-  //       });
-  //       weightedStarReviews = weightedStarReviews + responseData[key].rating;
-  //     }
-
-  //     if (loadedReviews) {
-  //       const round = (
-  //         Math.round((weightedStarReviews / loadedReviews.length) * 2) / 2
-  //       ).toFixed(1);
-  //       setTotalStars(Number(round));
-  //     }
-
-  //     setReviews(loadedReviews);
-  //     setIsLoadingReview(false);
-  //   };
-
-  //   fetchBookReviews().catch((error: any) => {
-  //     setIsLoadingReview(false);
-  //     setHttpError(error.message);
-  //   });
-  // }, [params.id]);
-
-  // useEffect(() => {
-  //   const fetchUserReviewBook = async () => {
-  //     if (isAuthenticated) {
-  //       const userReview = await fetch(`/api/secure/user-review/${params.id}`);
-  //       if (!userReview.ok) {
-  //         throw new Error('Something went wrong');
-  //       }
-  //       const userReviewResponseJson = await userReview.json();
-  //       setIsReviewLeft(userReviewResponseJson);
-  //     }
-  //     setIsLoadingUserReview(false);
-  //   };
-  //   fetchUserReviewBook().catch((error: any) => {
-  //     setIsLoadingUserReview(false);
-  //     setHttpError(error.message);
-  //   });
-  // }, [isAuthenticated, params.id]);
-
-  if (
-    isLoadingBook ||
-    isLoadingReview ||
-    isLoadingCheckedOut ||
-    isLoadingUserReview
-  ) {
+  if (isLoadingBook || isLoadingReview || isLoadingCheckedOut) {
     return <SpinnerLoading />;
   }
 
   const httpError =
-    loadingBookError ||
-    loadingReviewError ||
-    loadingCheckedOutError ||
-    loadingUserReviewError;
+    loadingBookError || loadingReviewError || loadingCheckedOutError;
 
   if (httpError) {
     return (
@@ -146,35 +41,6 @@ export default function BookCheckout() {
         <p>{httpError.message}</p>
       </div>
     );
-  }
-
-  async function checkoutBook() {
-    const checkoutResponse = await fetch(`/api/secure/check-out/${params.id}`);
-    if (!checkoutResponse.ok) {
-      throw new Error('Something went wrong!');
-    }
-    dispatch(changeIsCheckedOut(true));
-  }
-
-  async function submitReview(starInput: number, reviewDescription: string) {
-    let bookId: number = 0;
-    if (book?.id) {
-      bookId = book.id;
-    }
-
-    const reviewRequestModel = new ReviewRequestModel(
-      starInput,
-      bookId,
-      reviewDescription
-    );
-    const returnResponse = await fetch(`/api/secure/review-add`, {
-      method: 'POST',
-      body: JSON.stringify(reviewRequestModel),
-    });
-    if (!returnResponse.ok) {
-      throw new Error('Something went wrong!');
-    }
-    // setIsReviewLeft(true);
   }
 
   return (
@@ -198,20 +64,13 @@ export default function BookCheckout() {
               <h2>{book?.title}</h2>
               <h5 className="text-primary">{book?.author}</h5>
               <p className="lead">{book?.description}</p>
-              <StarsReview ratingProp={totalStars} size={32} />
+              <StarsReview stars={totalStars} size={32} />
             </div>
           </div>
-          <CheckoutAndReviewBox
-            book={book}
-            mobile={false}
-            // currentLoansCount={currentLoansCount}
-            checkoutBook={checkoutBook}
-            isReviewLeft={isReviewLeft}
-            submitReview={submitReview}
-          />
+          <CheckoutAndReviewBox mobile={false} />
         </div>
         <hr />
-        <LatestReviews reviews={reviews} bookId={book?.id} mobile={false} />
+        <LatestReviews mobile={false} />
       </div>
       <div className="container d-lg-none mt-5">
         <div className="d-flex justify-content-center alighn-items-center">
@@ -231,19 +90,12 @@ export default function BookCheckout() {
             <h2>{book?.title}</h2>
             <h5 className="text-primary">{book?.author}</h5>
             <p className="lead">{book?.description}</p>
-            <StarsReview ratingProp={totalStars} size={32} />
+            <StarsReview stars={totalStars} size={32} />
           </div>
         </div>
-        <CheckoutAndReviewBox
-          book={book}
-          mobile={true}
-          // currentLoansCount={currentLoansCount}
-          checkoutBook={checkoutBook}
-          isReviewLeft={isReviewLeft}
-          submitReview={submitReview}
-        />
+        <CheckoutAndReviewBox mobile={true} />
         <hr />
-        <LatestReviews reviews={reviews} bookId={book?.id} mobile={true} />
+        <LatestReviews mobile={true} />
       </div>
     </div>
   );

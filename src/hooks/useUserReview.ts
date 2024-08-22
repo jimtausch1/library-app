@@ -1,8 +1,10 @@
-import { useAppSelector } from '@/lib/hooks';
+import { changeIsReviewLeft } from '@/lib/features/reviewleft/reviewleft';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { QueryFunctionContext, useQuery } from "@tanstack/react-query";
 
 export function useUserReview(bookId: string) {
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+  const dispatch = useAppDispatch();
 
   return useQuery({
     queryKey: ['userReview', {
@@ -24,6 +26,7 @@ export function useUserReview(bookId: string) {
         }
 
         const userReviewResponseJson = await userReview.json();
+        dispatch(changeIsReviewLeft(userReviewResponseJson));
         return userReviewResponseJson;
       }
     }

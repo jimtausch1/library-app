@@ -1,7 +1,12 @@
+import { loadReviews } from "@/lib/features/reviews/reviews";
+import { loadTotalStars } from "@/lib/features/totalstars/totalstars";
+import { useAppDispatch } from '@/lib/hooks';
 import ReviewModel from "@/models/ReviewModel";
 import { QueryFunctionContext, useQuery } from "@tanstack/react-query";
 
 export function useBookReviews(bookId: string) {
+  const dispatch = useAppDispatch();
+
   return useQuery({
     queryKey: ['bookReviews', {
       bookId: bookId,
@@ -49,6 +54,9 @@ export function useBookReviews(bookId: string) {
         ).toFixed(1);
         totalStars = Number(round);
       }
+
+      dispatch(loadReviews(loadedReviews));
+      dispatch(loadTotalStars(totalStars));
 
       // setReviews(loadedReviews);
       // setIsLoadingReview(false);

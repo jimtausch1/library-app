@@ -1,18 +1,15 @@
 import Review from '@/app/reviewlist/[id]/Review';
-import ReviewModel from '@/models/ReviewModel';
+import { useAppSelector } from '@/lib/hooks';
 import Link from 'next/link';
 
 interface LatestReviewsProps {
-  reviews: ReviewModel[];
-  bookId: number | undefined;
   mobile: boolean;
 }
 
-export default function LatestReviews({
-  reviews,
-  bookId,
-  mobile,
-}: LatestReviewsProps) {
+export default function LatestReviews({ mobile }: LatestReviewsProps) {
+  const reviews = useAppSelector((state) => state.reviews.reviews);
+  const bookId = useAppSelector((state) => state.bookbyid.bookbyid).id;
+
   return (
     <div className={mobile ? 'mt-3' : 'row mt-5'}>
       <div className={mobile ? '' : 'col-sm-2 col-md-2'}>

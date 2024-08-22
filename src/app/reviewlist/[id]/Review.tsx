@@ -21,7 +21,7 @@ export default function Review({ review }: ReviewProps) {
         <div className="row">
           <div className="col">{dateRender}</div>
           <div className="col">
-            <StarsReview ratingProp={review.rating} size={16} />
+            <StarsReview stars={review.rating} size={16} />
           </div>
         </div>
         <div className="mt-2">

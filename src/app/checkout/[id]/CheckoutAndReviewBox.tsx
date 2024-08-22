@@ -1,24 +1,19 @@
 import LeaveAReview from '@/app/reviewlist/[id]/LeaveAReview';
 import { SpinnerLoading } from '@/components/spinner/SpinnerLoading';
 import { useCurrentLoansCount } from '@/hooks/useCurrentLoanCount';
-import { useAppSelector } from '@/lib/hooks';
-import BookModel from '@/models/BookModel';
+import { useUserReview } from '@/hooks/useUserReview';
+import { changeIsCheckedOut } from '@/lib/features/checkedout/checkedout';
+import { changeIsReviewLeft } from '@/lib/features/reviewleft/reviewleft';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import ReviewRequestModel from '@/models/ReviewRequestModel';
 import Link from 'next/link';
 
 export interface CheckoutAndReviewBoxProps {
-  book: BookModel | undefined;
   mobile: boolean;
-  checkoutBook: Function;
-  isReviewLeft: boolean;
-  submitReview: Function;
 }
 
 export default function CheckoutAndReviewBox({
-  book,
   mobile,
-  checkoutBook,
-  isReviewLeft,
-  submitReview,
 }: CheckoutAndReviewBoxProps) {
   function buttonRender() {
     if (isAuthenticated) {
@@ -66,14 +61,51 @@ export default function CheckoutAndReviewBox({
     );
   }
 
+  async function checkoutBook() {
+    const checkoutResponse = await fetch(`/api/secure/check-out/${book?.id}`);
+    if (!checkoutResponse.ok) {
+      throw new Error('Something went wrong!');
+    }
+    dispatch(changeIsCheckedOut(true));
+  }
+
+  async function submitReview(starInput: number, reviewDescription: string) {
+    let bookId: number = 0;
+    if (book?.id) {
+      bookId = book.id;
+    }
+
+    const reviewRequestModel = new ReviewRequestModel(
+      starInput,
+      bookId,
+      reviewDescription
+    );
+    const returnResponse = await fetch(`/api/secure/review-add`, {
+      method: 'POST',
+      body: JSON.stringify(reviewRequestModel),
+    });
+    if (!returnResponse.ok) {
+      throw new Error('Something went wrong!');
+    }
+    dispatch(changeIsReviewLeft(true));
+  }
+
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   const isCheckedOut = useAppSelector((state) => state.checkedout.ischeckedout);
+  const book = useAppSelector((state) => state.bookbyid.bookbyid);
+  const dispatch = useAppDispatch();
 
   const {
     data: currentLoansCount,
     isLoading: isLoadingCurrentLoansCount,
     error: loadingCurrentLoansCountError,
   } = useCurrentLoansCount();
+
+  const {
+    data: isReviewLeft,
+    isLoading: isLoadingUserReview,
+    error: loadingUserReviewError,
+  } = useUserReview(book?.id.toString());
 
   if (isLoadingCurrentLoansCount) {
     return <SpinnerLoading />;
