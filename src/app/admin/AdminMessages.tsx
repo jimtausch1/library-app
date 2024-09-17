@@ -1,7 +1,7 @@
 'use client';
 
 import Pagination from '@/components/pagination/Pagination';
-import { SpinnerLoading } from '@/components/spinner/SpinnerLoading';
+import SpinnerLoading from '@/components/spinner/SpinnerLoading';
 import { useAppSelector } from '@/lib/hooks';
 import AdminMessageRequest from '@/models/AdminMessageRequest';
 import MessageModel from '@/models/MessageModel';

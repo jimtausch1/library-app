@@ -1,7 +1,7 @@
 'use client';
 
 import Pagination from '@/components/pagination/Pagination';
-import { SpinnerLoading } from '@/components/spinner/SpinnerLoading';
+import SpinnerLoading from '@/components/spinner/SpinnerLoading';
 import { useSearchBooks } from '@/hooks/useSearchBooks';
 import BookModel from '@/models/BookModel';
 import { useState } from 'react';

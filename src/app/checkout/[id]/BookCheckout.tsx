@@ -1,7 +1,7 @@
 'use client';
 
 import StarsReview from '@/app/reviewlist/[id]/StarsReview';
-import { SpinnerLoading } from '@/components/spinner/SpinnerLoading';
+import SpinnerLoading from '@/components/spinner/SpinnerLoading';
 import { useBookById } from '@/hooks/useBookById';
 import { useBookReviews } from '@/hooks/useBookReviews';
 import { useCheckedOut } from '@/hooks/useCheckedOut';

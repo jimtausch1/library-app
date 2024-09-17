@@ -1,0 +1,205 @@
+import { http, HttpResponse } from 'msw'
+
+export const handlers = [
+  http.get('/api/auth/me', () => {
+    return HttpResponse.json({})
+  }),
+  http.get('http://localhost:8080/api/books', () => {
+    return HttpResponse.json({
+      "_embedded": {
+        "books": [
+          {
+            "id": 1,
+            "title": "JavaScript Cookbook",
+            "author": "Luv, Zofia",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin risus tortor, condimentum eget sapien ac, dapibus varius ligula. Maecenas justo erat, semper sed nunc vel, vulputate eleifend dui. Integer id ipsum vitae nisi malesuada feugiat. Proin sit amet quam laoreet, feugiat mi vitae, vestibulum dui. Aliquam erat volutpat. Etiam hendrerit erat nec mi auctor elementum. Curabitur vestibulum lectus a ante tempor tincidunt et sed orci. Proin maximus tortor in risus auctor efficitur. Phasellus quam mauris, laoreet et feugiat ac, imperdiet at quam. Nullam sollicitudin nec diam vel finibus.",
+            "copies": 10,
+            "copiesAvailable": 10,
+            "category": "FE",
+            "img": "",
+            "_links": {
+              "self": {
+                "href": "http://localhost:8080/api/books/1"
+              },
+              "book": {
+                "href": "http://localhost:8080/api/books/1"
+              }
+            }
+          },
+          {
+            "id": 2,
+            "title": "Become a Guru in JavaScript",
+            "author": "Luv, Lena",
+            "description": "Pellentesque varius aliquam lacus quis rhoncus. Nam a dui lectus. Vestibulum libero elit, ultricies sit amet sagittis eu, molestie at velit. Donec tincidunt tempus magna, quis facilisis libero elementum non. Sed velit lacus, laoreet sed augue fermentum, sagittis convallis metus. Sed nec est at massa venenatis aliquet. Donec pretium interdum fringilla. Sed ornare tellus enim, a tincidunt libero dictum vitae. Proin bibendum posuere dui. Donec sagittis neque massa, sed semper nulla vehicula at.",
+            "copies": 15,
+            "copiesAvailable": 15,
+            "category": "FE",
+            "img": "",
+            "_links": {
+              "self": {
+                "href": "http://localhost:8080/api/books/2"
+              },
+              "book": {
+                "href": "http://localhost:8080/api/books/2"
+              }
+            }
+          },
+          {
+            "id": 3,
+            "title": "Exploring Vue.js",
+            "author": "Luv, Jakub",
+            "description": "Proin at urna faucibus, pretium mi in, dapibus metus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam elementum ligula ut vestibulum tincidunt. Aenean dignissim enim eu libero accumsan, ultricies efficitur mauris bibendum. Sed vel blandit ligula, non tincidunt velit. Suspendisse vulputate tristique enim, a vulputate arcu accumsan vitae. Donec egestas ornare velit vestibulum tincidunt. Suspendisse ac dui nec tellus vulputate aliquet. Curabitur vitae mauris in turpis vulputate hendrerit at eget urna. Donec at suscipit nisi. Ut sit amet dignissim orci. Nunc sit amet tristique enim. Phasellus consectetur auctor dignissim. Curabitur cursus turpis dapibus, molestie dui finibus, molestie ante. Proin quis justo ut ipsum aliquet venenatis in ut enim.",
+            "copies": 10,
+            "copiesAvailable": 10,
+            "category": "FE",
+            "img": "",
+            "_links": {
+              "self": {
+                "href": "http://localhost:8080/api/books/3"
+              },
+              "book": {
+                "href": "http://localhost:8080/api/books/3"
+              }
+            }
+          },
+          {
+            "id": 4,
+            "title": "Advanced Techniques in Big Data",
+            "author": "Luv, Alexander",
+            "description": "Nunc eget lorem ac neque tincidunt mollis. Fusce finibus laoreet nunc nec hendrerit. Curabitur eu placerat urna, sit amet pellentesque enim. Donec velit ligula, congue eu lobortis vel, interdum nec tellus. Nulla nisl ipsum, porta non egestas sed, vulputate quis nisi. Etiam pellentesque in velit non convallis. Nullam id risus quis augue posuere sodales vel maximus justo. Maecenas nec leo a nibh aliquet placerat nec sed massa. Duis sit amet nisi libero. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus non viverra dolor. Pellentesque ligula mauris, congue quis neque quis, mollis scelerisque ligula. Pellentesque semper, erat commodo luctus mollis, nulla ipsum consectetur dolor, quis blandit massa sem fringilla libero. Maecenas eget mi nec est condimentum fermentum. Vivamus vehicula est sit amet ante gravida, eu finibus quam elementum. Proin egestas leo eu sagittis euismod.",
+            "copies": 12,
+            "copiesAvailable": 12,
+            "category": "Data",
+            "img": "",
+            "_links": {
+              "self": {
+                "href": "http://localhost:8080/api/books/4"
+              },
+              "book": {
+                "href": "http://localhost:8080/api/books/4"
+              }
+            }
+          },
+          {
+            "id": 5,
+            "title": "Crash Course in Big Data",
+            "author": "Luv, Judy",
+            "description": "Morbi eu tempus eros, in imperdiet sem. Nulla sed sagittis nisl, porttitor fringilla libero. Nullam ut urna aliquet, hendrerit quam in, dignissim diam. In in nibh vel nisi fermentum pretium sit amet vitae mi. Pellentesque eget augue efficitur, volutpat tellus eget, fringilla augue. Pellentesque tempus mi ac risus lacinia, et tincidunt lectus rutrum. Nullam et nibh a odio luctus tincidunt nec in ipsum. Sed ac est nulla. Nulla purus turpis, dignissim sit amet euismod lobortis, consequat ut dui. Maecenas commodo velit in elementum placerat. Nam sit amet blandit ante, sit amet mollis neque. Ut placerat venenatis leo sit amet dapibus. Nunc varius cursus lobortis. Aenean euismod dui at diam euismod aliquet. Fusce feugiat orci nec commodo placerat.",
+            "copies": 20,
+            "copiesAvailable": 20,
+            "category": "Data",
+            "img": "",
+            "_links": {
+              "self": {
+                "href": "http://localhost:8080/api/books/5"
+              },
+              "book": {
+                "href": "http://localhost:8080/api/books/5"
+              }
+            }
+          },
+          {
+            "id": 6,
+            "title": "Beginners Guide to SQL",
+            "author": "Luv, Anup",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin risus tortor, condimentum eget sapien ac, dapibus varius ligula. Maecenas justo erat, semper sed nunc vel, vulputate eleifend dui. Integer id ipsum vitae nisi malesuada feugiat. Proin sit amet quam laoreet, feugiat mi vitae, vestibulum dui. Aliquam erat volutpat. Etiam hendrerit erat nec mi auctor elementum. Curabitur vestibulum lectus a ante tempor tincidunt et sed orci. Proin maximus tortor in risus auctor efficitur. Phasellus quam mauris, laoreet et feugiat ac, imperdiet at quam. Nullam sollicitudin nec diam vel finibus.",
+            "copies": 20,
+            "copiesAvailable": 20,
+            "category": "Data",
+            "img": "",
+            "_links": {
+              "self": {
+                "href": "http://localhost:8080/api/books/6"
+              },
+              "book": {
+                "href": "http://localhost:8080/api/books/6"
+              }
+            }
+          },
+          {
+            "id": 7,
+            "title": "Advanced Techniques in JavaScript",
+            "author": "Luv, Yasemin",
+            "description": "Pellentesque varius aliquam lacus quis rhoncus. Nam a dui lectus. Vestibulum libero elit, ultricies sit amet sagittis eu, molestie at velit. Donec tincidunt tempus magna, quis facilisis libero elementum non. Sed velit lacus, laoreet sed augue fermentum, sagittis convallis metus. Sed nec est at massa venenatis aliquet. Donec pretium interdum fringilla. Sed ornare tellus enim, a tincidunt libero dictum vitae. Proin bibendum posuere dui. Donec sagittis neque massa, sed semper nulla vehicula at.",
+            "copies": 20,
+            "copiesAvailable": 20,
+            "category": "FE",
+            "img": "",
+            "_links": {
+              "self": {
+                "href": "http://localhost:8080/api/books/7"
+              },
+              "book": {
+                "href": "http://localhost:8080/api/books/7"
+              }
+            }
+          },
+          {
+            "id": 8,
+            "title": "Introduction to Spring Boot",
+            "author": "Luv, Fatma",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin risus tortor, condimentum eget sapien ac, dapibus varius ligula. Maecenas justo erat, semper sed nunc vel, vulputate eleifend dui. Integer id ipsum vitae nisi malesuada feugiat. Proin sit amet quam laoreet, feugiat mi vitae, vestibulum dui. Aliquam erat volutpat. Etiam hendrerit erat nec mi auctor elementum. Curabitur vestibulum lectus a ante tempor tincidunt et sed orci. Proin maximus tortor in risus auctor efficitur. Phasellus quam mauris, laoreet et feugiat ac, imperdiet at quam. Nullam sollicitudin nec diam vel finibus.",
+            "copies": 10,
+            "copiesAvailable": 10,
+            "category": "BE",
+            "img": "",
+            "_links": {
+              "self": {
+                "href": "http://localhost:8080/api/books/8"
+              },
+              "book": {
+                "href": "http://localhost:8080/api/books/8"
+              }
+            }
+          },
+          {
+            "id": 9,
+            "title": "Become a Guru in React.js",
+            "author": "Luv, Andrey",
+            "description": "Pellentesque varius aliquam lacus quis rhoncus. Nam a dui lectus. Vestibulum libero elit, ultricies sit amet sagittis eu, molestie at velit. Donec tincidunt tempus magna, quis facilisis libero elementum non. Sed velit lacus, laoreet sed augue fermentum, sagittis convallis metus. Sed nec est at massa venenatis aliquet. Donec pretium interdum fringilla. Sed ornare tellus enim, a tincidunt libero dictum vitae. Proin bibendum posuere dui. Donec sagittis neque massa, sed semper nulla vehicula at.",
+            "copies": 15,
+            "copiesAvailable": 15,
+            "category": "FE",
+            "img": "",
+            "_links": {
+              "self": {
+                "href": "http://localhost:8080/api/books/9"
+              },
+              "book": {
+                "href": "http://localhost:8080/api/books/9"
+              }
+            }
+          }
+        ]
+      },
+      "_links": {
+        "first": {
+          "href": "http://localhost:8080/api/books?page=0&size=9"
+        },
+        "self": {
+          "href": "http://localhost:8080/api/books?page=0&size=9"
+        },
+        "next": {
+          "href": "http://localhost:8080/api/books?page=1&size=9"
+        },
+        "last": {
+          "href": "http://localhost:8080/api/books?page=2&size=9"
+        },
+        "profile": {
+          "href": "http://localhost:8080/api/profile/books"
+        },
+        "search": {
+          "href": "http://localhost:8080/api/books/search"
+        }
+      },
+      "page": {
+        "size": 9,
+        "totalElements": 24,
+        "totalPages": 3,
+        "number": 0
+      }
+    }
+
+    )
+  })
+]

@@ -1,6 +1,6 @@
 'use client';
 
-import { SpinnerLoading } from '@/components/spinner/SpinnerLoading';
+import SpinnerLoading from '@/components/spinner/SpinnerLoading';
 import { useAppSelector } from '@/lib/hooks';
 import ShelfCurrentLoans from '@/models/ShelfCurrentLoans';
 import Image from 'next/image';

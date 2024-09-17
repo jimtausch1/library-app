@@ -1,5 +1,5 @@
 import LeaveAReview from '@/app/reviewlist/[id]/LeaveAReview';
-import { SpinnerLoading } from '@/components/spinner/SpinnerLoading';
+import SpinnerLoading from '@/components/spinner/SpinnerLoading';
 import { useCurrentLoansCount } from '@/hooks/useCurrentLoanCount';
 import { useUserReview } from '@/hooks/useUserReview';
 import { changeIsCheckedOut } from '@/lib/features/checkedout/checkedout';

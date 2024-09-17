@@ -1,5 +1,5 @@
 import Pagination from '@/components/pagination/Pagination';
-import { SpinnerLoading } from '@/components/spinner/SpinnerLoading';
+import SpinnerLoading from '@/components/spinner/SpinnerLoading';
 import { useAppSelector } from '@/lib/hooks';
 import HistoryModel from '@/models/HistoryModel';
 import Image from 'next/image';
