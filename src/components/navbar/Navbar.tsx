@@ -5,18 +5,16 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 import { default as Link, default as NavLink } from 'next/link';
 import { useEffect } from 'react';
 import { changeIsAuthenticated } from '../../lib/features/auth/auth';
-import { SpinnerLoading } from '../spinner/SpinnerLoading';
+import SpinnerLoading from '../spinner/SpinnerLoading';
 
-const Navbar = () => {
+export default function Navbar() {
   const { user, error, isLoading } = useUser();
-  const isUser = user !== undefined;
+  const isAuthenticated = user !== undefined;
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(changeIsAuthenticated(isUser));
-  }, [dispatch, isUser]);
-
-  const isAuthenticated = user !== undefined;
+    dispatch(changeIsAuthenticated(isAuthenticated));
+  }, [dispatch, isAuthenticated]);
 
   if (isLoading) {
     return <SpinnerLoading />;
@@ -98,6 +96,4 @@ const Navbar = () => {
       </div>
     </nav>
   );
-};
-
-export default Navbar;
+}
