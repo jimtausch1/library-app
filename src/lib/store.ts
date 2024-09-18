@@ -1,7 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { AuthSlice } from './features/auth/auth'
 import { BookByIdSlice } from './features/bookbyid/bookbyid'
-// import { booksApi } from './features/books/api'
 import { BooksSlice } from './features/books/books'
 import { CheckedOutSlice } from './features/checkedout/checkedout'
 import { ReviewLeftSlice } from './features/reviewleft/reviewleft'
@@ -18,10 +17,7 @@ export const makeStore = () => {
       reviewleft: ReviewLeftSlice.reducer,
       reviews: ReviewsSlice.reducer,
       totalstars: TotalStarsSlice.reducer,
-      // [booksApi.reducerPath]: booksApi.reducer,
     },
-    // middleware: (getDefaultMiddleware) =>
-    //   getDefaultMiddleware().concat(booksApi.middleware),
   })
 }
 

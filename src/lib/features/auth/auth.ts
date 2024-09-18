@@ -3,8 +3,6 @@
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 
-
-
 const initialState: Library.AuthState = {
   data: undefined,
   isAuthenticated: false,
