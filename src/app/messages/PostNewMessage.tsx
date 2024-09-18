@@ -1,7 +1,6 @@
 'use client';
 
 import { useAppSelector } from '@/lib/hooks';
-import MessageModel from '@/models/MessageModel';
 import { useState } from 'react';
 
 const PostNewMessage = () => {
@@ -13,10 +12,10 @@ const PostNewMessage = () => {
 
   async function submitNewQuestion() {
     if (isAuthenticated && title !== '' && question !== '') {
-      const messageRequestModel: MessageModel = new MessageModel(
+      const messageRequestModel: Library.MessageModel = {
         title,
-        question
-      );
+        question,
+      };
 
       const submitNewQuestionResponse = await fetch(`/api/secure/message-add`, {
         method: 'POST',

@@ -1,7 +1,6 @@
 'use client';
 
 import { useAppSelector } from '@/lib/hooks';
-import AddBookRequest from '@/models/AddBookRequest';
 import { useState } from 'react';
 
 const AddNewBook = () => {
@@ -49,21 +48,24 @@ const AddNewBook = () => {
       description !== '' &&
       copies >= 0
     ) {
-      const book: AddBookRequest = new AddBookRequest(
+      const book: Library.AddBookRequest = {
         title,
         author,
         description,
         copies,
-        category
-      );
+        category,
+      };
+
       book.img = selectedImage;
       const submitNewBookResponse = await fetch(`/api/secure/book-add`, {
         method: 'POST',
         body: JSON.stringify(book),
       });
+
       if (!submitNewBookResponse.ok) {
         throw new Error('Something went wrong!');
       }
+
       setTitle('');
       setAuthor('');
       setDescription('');

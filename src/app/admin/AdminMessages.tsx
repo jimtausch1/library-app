@@ -3,8 +3,6 @@
 import Pagination from '@/components/pagination/Pagination';
 import SpinnerLoading from '@/components/spinner/SpinnerLoading';
 import { useAppSelector } from '@/lib/hooks';
-import AdminMessageRequest from '@/models/AdminMessageRequest';
-import MessageModel from '@/models/MessageModel';
 import { useEffect, useState } from 'react';
 import AdminMessage from './AdminMessage';
 
@@ -16,7 +14,7 @@ const AdminMessages = () => {
   const [httpError, setHttpError] = useState(null);
 
   // Messages endpoint State
-  const [messages, setMessages] = useState<MessageModel[]>([]);
+  const [messages, setMessages] = useState<Library.MessageModel[]>([]);
   const [messagesPerPage] = useState(5);
 
   // Pagination
@@ -63,8 +61,10 @@ const AdminMessages = () => {
 
   async function submitResponseToQuestion(id: number, response: string) {
     if (isAuthenticated && id !== null && response !== '') {
-      const messageAdminRequestModel: AdminMessageRequest =
-        new AdminMessageRequest(id, response);
+      const messageAdminRequestModel: Library.AdminMessageRequest = {
+        id,
+        response,
+      };
 
       const messageAdminRequestModelResponse = await fetch(
         `/api/secure/message-admin`,

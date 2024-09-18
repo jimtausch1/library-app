@@ -1,4 +1,19 @@
 declare namespace Library {
+
+  export interface AddBookRequest {
+    title: string;
+    author: string;
+    description: string;
+    copies: number;
+    category: string;
+    img?: string;
+  }
+
+  export interface AdminMessageRequest {
+    id: number;
+    response: string;
+  }
+
   export interface BookModel {
     id: number;
     title: string;
@@ -29,12 +44,28 @@ declare namespace Library {
     img: string;
   }
 
+  export interface MessageModel {
+    title: string;
+    question: string;
+    id?: number;
+    userEmail?: string;
+    adminEmail?: string;
+    response?: string;
+    closed?: boolean;
+  }
+
   export interface ReviewModel {
     id: number;
     userEmail: string;
     date: string;
     rating: number;
     book_id: number;
+    reviewDescription?: string;
+  }
+
+  export interface ReviewRequestModel {
+    rating: number;
+    bookId: number;
     reviewDescription?: string;
   }
 

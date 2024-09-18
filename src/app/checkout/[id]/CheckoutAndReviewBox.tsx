@@ -5,7 +5,6 @@ import { useUserReview } from '@/hooks/useUserReview';
 import { changeIsCheckedOut } from '@/lib/features/checkedout/checkedout';
 import { changeIsReviewLeft } from '@/lib/features/reviewleft/reviewleft';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
-import ReviewRequestModel from '@/models/ReviewRequestModel';
 import Link from 'next/link';
 
 export interface CheckoutAndReviewBoxProps {
@@ -75,18 +74,21 @@ export default function CheckoutAndReviewBox({
       bookId = book.id;
     }
 
-    const reviewRequestModel = new ReviewRequestModel(
-      starInput,
+    const reviewRequestModel: Library.ReviewRequestModel = {
+      rating: starInput,
       bookId,
-      reviewDescription
-    );
+      reviewDescription,
+    };
+
     const returnResponse = await fetch(`/api/secure/review-add`, {
       method: 'POST',
       body: JSON.stringify(reviewRequestModel),
     });
+
     if (!returnResponse.ok) {
       throw new Error('Something went wrong!');
     }
+
     dispatch(changeIsReviewLeft(true));
   }
 

@@ -1,10 +1,9 @@
 'use client';
 
-import MessageModel from '@/models/MessageModel';
 import { useState } from 'react';
 
 interface AdminMessageProps {
-  message: MessageModel;
+  message: Library.MessageModel;
   submitResponseToQuestion: any;
 }
 

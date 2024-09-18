@@ -3,7 +3,6 @@
 import Pagination from '@/components/pagination/Pagination';
 import SpinnerLoading from '@/components/spinner/SpinnerLoading';
 import { useAppSelector } from '@/lib/hooks';
-import MessageModel from '@/models/MessageModel';
 import { useEffect, useState } from 'react';
 
 const Messages = () => {
@@ -12,7 +11,7 @@ const Messages = () => {
   const [httpError, setHttpError] = useState(null);
 
   // Messages
-  const [messages, setMessages] = useState<MessageModel[]>([]);
+  const [messages, setMessages] = useState<Library.MessageModel[]>([]);
 
   // Pagination
   const [messagesPerPage] = useState(5);
