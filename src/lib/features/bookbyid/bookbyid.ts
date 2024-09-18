@@ -1,15 +1,10 @@
 'use client';
 
-import BookModel from "@/models/BookModel";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 
-export interface IBookById {
-  bookbyid: BookModel;
-}
-
-const initialState: IBookById = {
-  bookbyid: {} as BookModel,
+const initialState: Library.BookById = {
+  bookbyid: {} as Library.BookModel,
 };
 
 // creating action-reducer slice
@@ -17,7 +12,7 @@ export const BookByIdSlice = createSlice({
   name: "bookbyid_slice",
   initialState,
   reducers: {
-    loadBookById: (state, action: PayloadAction<BookModel>) => {
+    loadBookById: (state, action: PayloadAction<Library.BookModel>) => {
       state.bookbyid = action.payload;
     },
   },

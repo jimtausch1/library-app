@@ -1,8 +1,7 @@
-import ShelfCurrentLoans from '@/models/ShelfCurrentLoans';
 import Image from 'next/image';
 
 interface LoansModalProps {
-  shelfCurrentLoan: ShelfCurrentLoans;
+  shelfCurrentLoan: Library.ShelfCurrentLoans;
   mobile: boolean;
   returnBook: Function;
   renewLoan: Function;

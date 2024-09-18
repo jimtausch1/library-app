@@ -1,12 +1,11 @@
 'use client';
 
-import ReviewModel from "@/models/ReviewModel";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface IReviews {
   data: any; // data stored from API
-  reviews: ReviewModel[];
+  reviews: Library.ReviewModel[];
 }
 
 const initialState: IReviews = {
@@ -19,7 +18,7 @@ export const ReviewsSlice = createSlice({
   name: "reviews_slice",
   initialState,
   reducers: {
-    loadReviews: (state, action: PayloadAction<ReviewModel[]>) => {
+    loadReviews: (state, action: PayloadAction<Library.ReviewModel[]>) => {
       state.reviews = action.payload;
     },
   },

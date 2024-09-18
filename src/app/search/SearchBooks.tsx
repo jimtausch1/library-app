@@ -3,7 +3,6 @@
 import Pagination from '@/components/pagination/Pagination';
 import SpinnerLoading from '@/components/spinner/SpinnerLoading';
 import { useSearchBooks } from '@/hooks/useSearchBooks';
-import BookModel from '@/models/BookModel';
 import { useState } from 'react';
 import SearchBook from './SearchBook';
 
@@ -152,7 +151,7 @@ export default function SearchBooks() {
                 {indexOfFirstBook + 1} to {lastItem} of {totalAmountOfBooks}{' '}
                 items:
               </p>
-              {books.map((book: BookModel) => (
+              {books.map((book: Library.BookModel) => (
                 <SearchBook book={book} key={book.id} />
               ))}
             </>

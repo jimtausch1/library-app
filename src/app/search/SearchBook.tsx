@@ -1,11 +1,10 @@
 'use client';
 
-import BookModel from '@/models/BookModel';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export interface SearchBookProps {
-  book: BookModel;
+  book: Library.BookModel;
 }
 
 export default function SearchBook({ book }: SearchBookProps) {

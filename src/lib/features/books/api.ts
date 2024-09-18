@@ -1,9 +1,4 @@
-import BookModel from '@/models/BookModel';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
-interface BooksResponse {
-  data: BookModel[];
-}
 
 const booksQuery = fetchBaseQuery({ baseUrl: 'http://localhost:8080/api/books?page=0&size=9' });
 
@@ -15,7 +10,7 @@ export const booksApi = createApi({
   baseQuery: async (args, api, extraOptions) => {
     let result = await booksQuery(args, api, extraOptions)
     if (result.data) {
-      const responseData: BooksResponse = {
+      const responseData: Library.BooksResponse = {
         data: (result.data as any)._embedded.books
       };
 
@@ -25,7 +20,7 @@ export const booksApi = createApi({
     return result
   },
   endpoints: (builder) => ({
-    getBooks: builder.query<BookModel[], void>({
+    getBooks: builder.query<Library.BookModel[], void>({
       query: () => `?page=0&size=9`,
       providesTags: ['books']
     }),

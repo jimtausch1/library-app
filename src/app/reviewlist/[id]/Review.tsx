@@ -1,8 +1,7 @@
-import ReviewModel from '@/models/ReviewModel';
 import StarsReview from './StarsReview';
 
 export interface ReviewProps {
-  review: ReviewModel;
+  review: Library.ReviewModel;
 }
 
 export default function Review({ review }: ReviewProps) {

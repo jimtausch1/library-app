@@ -1,4 +1,3 @@
-import StoreProvider from '@/app/StoreProvider';
 import { UserProvider, useUser } from '@auth0/nextjs-auth0/client';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
@@ -32,11 +31,9 @@ describe('Explore Top Books', () => {
     const mockParam = { ...mockAuth0, user: auth0User };
     (useUser as jest.Mock).mockImplementation(() => mockParam);
     render(
-      <StoreProvider>
-        <UserProvider>
-          <ExploreTopBooks />
-        </UserProvider>
-      </StoreProvider>
+      <UserProvider>
+        <ExploreTopBooks />
+      </UserProvider>
     ); // Arrange
 
     const element = await screen.findByText('Explore top books'); // Act
@@ -47,11 +44,9 @@ describe('Explore Top Books', () => {
   it('should have Explore top books link when unauthenticated', async () => {
     (useUser as jest.Mock).mockImplementation(() => mockAuth0);
     render(
-      <StoreProvider>
-        <UserProvider>
-          <ExploreTopBooks />
-        </UserProvider>
-      </StoreProvider>
+      <UserProvider>
+        <ExploreTopBooks />
+      </UserProvider>
     ); // Arrange
 
     const element = await screen.findByText('Explore top books'); // Act

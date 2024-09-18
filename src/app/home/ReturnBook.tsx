@@ -1,15 +1,14 @@
 'use client';
 
-import BookModel from '@/models/BookModel';
 import Image from 'next/image';
 import Link from 'next/link';
 
 interface ReturnBookProps {
-  book: BookModel;
+  book: Library.BookModel;
 }
 
 export default function ReturnBook({
-  book = {} as BookModel,
+  book = {} as Library.BookModel,
 }: ReturnBookProps) {
   return (
     <div className="col-xs-6 col-sm-6 col-md-4 col-lg-3 mb-3">

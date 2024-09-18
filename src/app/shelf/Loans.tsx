@@ -2,7 +2,6 @@
 
 import SpinnerLoading from '@/components/spinner/SpinnerLoading';
 import { useAppSelector } from '@/lib/hooks';
-import ShelfCurrentLoans from '@/models/ShelfCurrentLoans';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -14,7 +13,7 @@ const Loans = () => {
 
   // Current Loans
   const [shelfCurrentLoans, setShelfCurrentLoans] = useState<
-    ShelfCurrentLoans[]
+    Library.ShelfCurrentLoans[]
   >([]);
   const [isLoadingUserLoans, setIsLoadingUserLoans] = useState(true);
   const [checkout, setCheckout] = useState(false);

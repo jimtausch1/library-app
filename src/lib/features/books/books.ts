@@ -1,12 +1,11 @@
 'use client';
 
-import BookModel from "@/models/BookModel";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface IBooks {
   data: any; // data stored from API
-  books: BookModel[];
+  books: Library.BookModel[];
 }
 
 const initialState: IBooks = {
@@ -19,7 +18,7 @@ export const BooksSlice = createSlice({
   name: "books_slice",
   initialState,
   reducers: {
-    loadBooks: (state, action: PayloadAction<BookModel[]>) => {
+    loadBooks: (state, action: PayloadAction<Library.BookModel[]>) => {
       state.books = action.payload;
     },
   },

@@ -1,11 +1,10 @@
 'use client';
 
-import BookModel from '@/models/BookModel';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 interface ChangeQuantityOfBookProps {
-  book: BookModel;
+  book: Library.BookModel;
   deleteBook: Function;
 }
 

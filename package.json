@@ -16,7 +16,7 @@
     "@tanstack/react-query-devtools": "^5.51.24",
     "bootstrap": "^5.3.3",
     "library-app": "file:",
-    "next": "14.2.5",
+    "next": "^14.2.12",
     "next-auth": "^4.24.7",
     "react": "^18",
     "react-dom": "^18",

@@ -3,7 +3,7 @@
 import { useAppSelector } from '@/lib/hooks';
 import Link from 'next/link';
 
-const Heros = () => {
+export default function Heros() {
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
 
   return (
@@ -109,6 +109,4 @@ const Heros = () => {
       </div>
     </div>
   );
-};
-
-export default Heros;
+}

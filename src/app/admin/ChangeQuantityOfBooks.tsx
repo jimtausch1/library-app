@@ -3,7 +3,6 @@
 import Pagination from '@/components/pagination/Pagination';
 import SpinnerLoading from '@/components/spinner/SpinnerLoading';
 import { useBooks } from '@/hooks/useBooks';
-import BookModel from '@/models/BookModel';
 import { useState } from 'react';
 import ChangeQuantityOfBook from './ChangeQuantityOfBook';
 
@@ -54,7 +53,7 @@ export default function ChangeQuantityOfBooks() {
           <p>
             {indexOfFirstBook + 1} to {lastItem} of {totalAmountOfBooks} items:
           </p>
-          {books.map((book: BookModel) => (
+          {books.map((book: Library.BookModel) => (
             <ChangeQuantityOfBook
               book={book}
               key={book.id}

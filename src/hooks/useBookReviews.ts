@@ -1,7 +1,6 @@
 import { loadReviews } from "@/lib/features/reviews/reviews";
 import { loadTotalStars } from "@/lib/features/totalstars/totalstars";
 import { useAppDispatch } from '@/lib/hooks';
-import ReviewModel from "@/models/ReviewModel";
 import { QueryFunctionContext, useQuery } from "@tanstack/react-query";
 
 export function useBookReviews(bookId: string) {
@@ -30,7 +29,7 @@ export function useBookReviews(bookId: string) {
 
       const responseData = responseJsonReviews._embedded.reviews;
 
-      const loadedReviews: ReviewModel[] = [];
+      const loadedReviews: Library.ReviewModel[] = [];
 
       let weightedStarReviews: number = 0;
 

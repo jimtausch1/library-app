@@ -1,8 +1,8 @@
-import StoreProvider from '@/app/StoreProvider';
 import QueryProvider from '@/context/QueryProvider';
+import { renderWithStore } from '@/lib/utils';
 import { UserProvider, useUser } from '@auth0/nextjs-auth0/client';
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import Carousel from './Carousel';
 
 jest.mock('@auth0/nextjs-auth0/client', () => {
@@ -32,14 +32,12 @@ describe('Carousel', () => {
   it('should have links when authenticated', async () => {
     const mockParam = { ...mockAuth0, user: auth0User };
     (useUser as jest.Mock).mockImplementation(() => mockParam);
-    render(
-      <StoreProvider>
-        <UserProvider>
-          <QueryProvider>
-            <Carousel />
-          </QueryProvider>
-        </UserProvider>
-      </StoreProvider>
+    renderWithStore(
+      <UserProvider>
+        <QueryProvider>
+          <Carousel />
+        </QueryProvider>
+      </UserProvider>
     ); // Arrange
 
     const links = await screen.findAllByRole('link'); // Act

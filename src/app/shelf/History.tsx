@@ -1,7 +1,6 @@
 import Pagination from '@/components/pagination/Pagination';
 import SpinnerLoading from '@/components/spinner/SpinnerLoading';
 import { useAppSelector } from '@/lib/hooks';
-import HistoryModel from '@/models/HistoryModel';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -12,7 +11,7 @@ const History = () => {
   const [httpError, setHttpError] = useState(null);
 
   // Histories
-  const [histories, setHistories] = useState<HistoryModel[]>([]);
+  const [histories, setHistories] = useState<Library.HistoryModel[]>([]);
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);

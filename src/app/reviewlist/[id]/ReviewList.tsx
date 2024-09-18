@@ -2,13 +2,12 @@
 
 import Pagination from '@/components/pagination/Pagination';
 import SpinnerLoading from '@/components/spinner/SpinnerLoading';
-import ReviewModel from '@/models/ReviewModel';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Review from './Review';
 
 export default function ReviewList() {
-  const [reviews, setReviews] = useState<ReviewModel[]>([]);
+  const [reviews, setReviews] = useState<Library.ReviewModel[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [httpError, setHttpError] = useState(null);
 
@@ -41,7 +40,7 @@ export default function ReviewList() {
       setTotalAmountOfReviews(responseJsonReviews.page.totalElements);
       setTotalPages(responseJsonReviews.page.totalPages);
 
-      const loadedReviews: ReviewModel[] = [];
+      const loadedReviews: Library.ReviewModel[] = [];
 
       for (const key in responseData) {
         loadedReviews.push({

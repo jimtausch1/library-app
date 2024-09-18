@@ -16,7 +16,7 @@ export const handlers = [
             "copies": 10,
             "copiesAvailable": 10,
             "category": "FE",
-            "img": "",
+            "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZUA",
             "_links": {
               "self": {
                 "href": "http://localhost:8080/api/books/1"
@@ -34,7 +34,7 @@ export const handlers = [
             "copies": 15,
             "copiesAvailable": 15,
             "category": "FE",
-            "img": "",
+            "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZUA",
             "_links": {
               "self": {
                 "href": "http://localhost:8080/api/books/2"
@@ -52,7 +52,7 @@ export const handlers = [
             "copies": 10,
             "copiesAvailable": 10,
             "category": "FE",
-            "img": "",
+            "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZUA",
             "_links": {
               "self": {
                 "href": "http://localhost:8080/api/books/3"
@@ -70,7 +70,7 @@ export const handlers = [
             "copies": 12,
             "copiesAvailable": 12,
             "category": "Data",
-            "img": "",
+            "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZUA",
             "_links": {
               "self": {
                 "href": "http://localhost:8080/api/books/4"
@@ -88,7 +88,7 @@ export const handlers = [
             "copies": 20,
             "copiesAvailable": 20,
             "category": "Data",
-            "img": "",
+            "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZUA",
             "_links": {
               "self": {
                 "href": "http://localhost:8080/api/books/5"
@@ -106,7 +106,7 @@ export const handlers = [
             "copies": 20,
             "copiesAvailable": 20,
             "category": "Data",
-            "img": "",
+            "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZUA",
             "_links": {
               "self": {
                 "href": "http://localhost:8080/api/books/6"
@@ -124,7 +124,7 @@ export const handlers = [
             "copies": 20,
             "copiesAvailable": 20,
             "category": "FE",
-            "img": "",
+            "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZUA",
             "_links": {
               "self": {
                 "href": "http://localhost:8080/api/books/7"
@@ -142,7 +142,7 @@ export const handlers = [
             "copies": 10,
             "copiesAvailable": 10,
             "category": "BE",
-            "img": "",
+            "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZUA",
             "_links": {
               "self": {
                 "href": "http://localhost:8080/api/books/8"
@@ -160,7 +160,7 @@ export const handlers = [
             "copies": 15,
             "copiesAvailable": 15,
             "category": "FE",
-            "img": "",
+            "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZUA",
             "_links": {
               "self": {
                 "href": "http://localhost:8080/api/books/9"

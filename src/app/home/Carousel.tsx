@@ -4,7 +4,6 @@ import Link from 'next/link';
 
 import SpinnerLoading from '@/components/spinner/SpinnerLoading';
 import { useBooks } from '@/hooks/useBooks';
-import BookModel from '@/models/BookModel';
 import ReturnBook from './ReturnBook';
 
 export default function Carousel() {
@@ -39,21 +38,21 @@ export default function Carousel() {
         <div className="carousel-inner">
           <div className="carousel-item active">
             <div className="row d-flex justify-content-center align-items-center">
-              {books.slice(0, 3).map((book: BookModel) => (
+              {books.slice(0, 3).map((book: Library.BookModel) => (
                 <ReturnBook book={book} key={book.id} />
               ))}
             </div>
           </div>
           <div className="carousel-item">
             <div className="row d-flex justify-content-center align-items-center">
-              {books.slice(3, 6).map((book: BookModel) => (
+              {books.slice(3, 6).map((book: Library.BookModel) => (
                 <ReturnBook book={book} key={book.id} />
               ))}
             </div>
           </div>
           <div className="carousel-item">
             <div className="row d-flex justify-content-center align-items-center">
-              {books.slice(6, 9).map((book: BookModel) => (
+              {books.slice(6, 9).map((book: Library.BookModel) => (
                 <ReturnBook book={book} key={book.id} />
               ))}
             </div>
