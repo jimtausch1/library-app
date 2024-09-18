@@ -3,15 +3,10 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
-interface ChangeQuantityOfBookProps {
-  book: Library.BookModel;
-  deleteBook: Function;
-}
-
 export default function ChangeQuantityOfBook({
   book,
   deleteBook,
-}: ChangeQuantityOfBookProps) {
+}: Library.ChangeQuantityOfBookProps) {
   const [quantity, setQuantity] = useState<number>(0);
   const [remaining, setRemaining] = useState<number>(0);
 

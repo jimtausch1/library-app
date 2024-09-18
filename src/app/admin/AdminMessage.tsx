@@ -2,15 +2,10 @@
 
 import { useState } from 'react';
 
-interface AdminMessageProps {
-  message: Library.MessageModel;
-  submitResponseToQuestion: any;
-}
-
 export default function AdminMessage({
   message,
   submitResponseToQuestion,
-}: AdminMessageProps) {
+}: Library.AdminMessageProps) {
   const [displayWarning, setDisplayWarning] = useState(false);
   const [response, setResponse] = useState('');
 

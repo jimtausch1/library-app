@@ -1,14 +1,8 @@
-interface PaginationProps {
-  currentPage: number;
-  totalPages: number;
-  paginate: any;
-}
-
 export default function Pagination({
   currentPage,
   totalPages,
   paginate,
-}: PaginationProps) {
+}: Library.PaginationProps) {
   const pageNumbers = [];
 
   if (currentPage === 1) {

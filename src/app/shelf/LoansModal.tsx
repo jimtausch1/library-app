@@ -1,18 +1,11 @@
 import Image from 'next/image';
 
-interface LoansModalProps {
-  shelfCurrentLoan: Library.ShelfCurrentLoans;
-  mobile: boolean;
-  returnBook: Function;
-  renewLoan: Function;
-}
-
 export default function LoansModal({
   shelfCurrentLoan,
   mobile,
   returnBook,
   renewLoan,
-}: LoansModalProps) {
+}: Library.LoansModalProps) {
   return (
     <div
       className="modal fade"

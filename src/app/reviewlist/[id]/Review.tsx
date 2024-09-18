@@ -1,10 +1,6 @@
 import StarsReview from './StarsReview';
 
-export interface ReviewProps {
-  review: Library.ReviewModel;
-}
-
-export default function Review({ review }: ReviewProps) {
+export default function Review({ review }: Library.ReviewProps) {
   const date = new Date(review.date);
 
   const longMonth = date.toLocaleString('en-us', { month: 'long' });

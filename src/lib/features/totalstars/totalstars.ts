@@ -3,12 +3,9 @@
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 
-export interface ITotalStars {
-  data: any; // data stored from API
-  totalstars: number;
-}
 
-const initialState: ITotalStars = {
+
+const initialState: Library.TotalStarsState = {
   data: undefined,
   totalstars: 0,
 };

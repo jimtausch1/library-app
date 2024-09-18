@@ -3,12 +3,9 @@
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 
-export interface IBooks {
-  data: any; // data stored from API
-  books: Library.BookModel[];
-}
 
-const initialState: IBooks = {
+
+const initialState: Library.BooksState = {
   data: undefined,
   books: [],
 };

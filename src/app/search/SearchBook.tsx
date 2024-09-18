@@ -3,11 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-export interface SearchBookProps {
-  book: Library.BookModel;
-}
-
-export default function SearchBook({ book }: SearchBookProps) {
+export default function SearchBook({ book }: Library.SearchBookProps) {
   return (
     <div className="card mt-3 shadow p-3 mb-3 bg-body rounded">
       <div className="row g-0">

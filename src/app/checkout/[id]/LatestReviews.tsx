@@ -2,11 +2,7 @@ import Review from '@/app/reviewlist/[id]/Review';
 import { useAppSelector } from '@/lib/hooks';
 import Link from 'next/link';
 
-interface LatestReviewsProps {
-  mobile: boolean;
-}
-
-export default function LatestReviews({ mobile }: LatestReviewsProps) {
+export default function LatestReviews({ mobile }: Library.LatestReviewsProps) {
   const reviews = useAppSelector((state) => state.reviews.reviews);
   const bookId = useAppSelector((state) => state.bookbyid.bookbyid).id;
 

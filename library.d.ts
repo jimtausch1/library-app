@@ -9,9 +9,19 @@ declare namespace Library {
     img?: string;
   }
 
+  export interface AdminMessageProps {
+    message: MessageModel;
+    submitResponseToQuestion: any;
+  }
+
   export interface AdminMessageRequest {
     id: number;
     response: string;
+  }
+
+  export interface AuthState {
+    data: any; // data stored from API
+    isAuthenticated: boolean;
   }
 
   export interface BookModel {
@@ -33,6 +43,24 @@ declare namespace Library {
     data: BookModel[];
   }
 
+  export interface BooksState {
+    data: any; // data stored from API
+    books: Library.BookModel[];
+  }
+
+  export interface ChangeQuantityOfBookProps {
+    book: BookModel;
+    deleteBook: Function;
+  }
+
+  export interface CheckedOutState {
+    ischeckedout: boolean;
+  }
+
+  export interface CheckoutAndReviewBoxProps {
+    mobile: boolean;
+  }
+
   export interface HistoryModel {
     id: number;
     userEmail: string;
@@ -42,6 +70,21 @@ declare namespace Library {
     author: string;
     description: string;
     img: string;
+  }
+
+  export interface LatestReviewsProps {
+    mobile: boolean;
+  }
+
+  export interface LeaveAReviewProps {
+    submitReview: Function;
+  }
+
+  export interface LoansModalProps {
+    shelfCurrentLoan: Library.ShelfCurrentLoans;
+    mobile: boolean;
+    returnBook: Function;
+    renewLoan: Function;
   }
 
   export interface MessageModel {
@@ -54,6 +97,20 @@ declare namespace Library {
     closed?: boolean;
   }
 
+  export interface PaginationProps {
+    currentPage: number;
+    totalPages: number;
+    paginate: any;
+  }
+
+  export interface ReturnBookProps {
+    book: BookModel;
+  }
+
+  export interface ReviewLeftState {
+    isreviewleft: boolean;
+  }
+
   export interface ReviewModel {
     id: number;
     userEmail: string;
@@ -63,14 +120,37 @@ declare namespace Library {
     reviewDescription?: string;
   }
 
+  export interface ReviewProps {
+    review: ReviewModel;
+  }
+
   export interface ReviewRequestModel {
     rating: number;
     bookId: number;
     reviewDescription?: string;
   }
 
+  export interface ReviewsState {
+    data: any; // data stored from API
+    reviews: Library.ReviewModel[];
+  }
+
+  export interface SearchBookProps {
+    book: Library.BookModel;
+  }
+
   export interface ShelfCurrentLoans {
     book: BookModel;
     daysLeft: number;
+  }
+
+  export interface StarsReviewProps {
+    stars: number;
+    size: number;
+  }
+
+  export interface TotalStarsState {
+    data: any; // data stored from API
+    totalstars: number;
   }
 }

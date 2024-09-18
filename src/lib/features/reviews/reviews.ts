@@ -3,12 +3,9 @@
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 
-export interface IReviews {
-  data: any; // data stored from API
-  reviews: Library.ReviewModel[];
-}
 
-const initialState: IReviews = {
+
+const initialState: Library.ReviewsState = {
   data: undefined,
   reviews: [],
 };

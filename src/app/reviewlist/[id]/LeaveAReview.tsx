@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import StarsReview from './StarsReview';
 
-export interface LeaveAReviewProps {
-  submitReview: any;
-}
-
-export default function LeaveAReview({ submitReview }: LeaveAReviewProps) {
+export default function LeaveAReview({
+  submitReview,
+}: Library.LeaveAReviewProps) {
   const [starInput, setStarInput] = useState(0);
   const [displayInput, setDisplayInput] = useState(false);
   const [reviewDescription, setReviewDescription] = useState('');

@@ -3,11 +3,9 @@
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 
-export interface ICheckedOut {
-  ischeckedout: boolean;
-}
 
-const initialState: ICheckedOut = {
+
+const initialState: Library.CheckedOutState = {
   ischeckedout: false,
 };
 

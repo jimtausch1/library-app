@@ -1,9 +1,4 @@
-export interface StarsReviewProps {
-  stars: number;
-  size: number;
-}
-
-export default function StarsReview({ stars, size }: StarsReviewProps) {
+export default function StarsReview({ stars, size }: Library.StarsReviewProps) {
   let rating = stars;
   let fullStars = 0;
   let halfStars = 0;

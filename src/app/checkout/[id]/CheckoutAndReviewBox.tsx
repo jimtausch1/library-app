@@ -7,13 +7,9 @@ import { changeIsReviewLeft } from '@/lib/features/reviewleft/reviewleft';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import Link from 'next/link';
 
-export interface CheckoutAndReviewBoxProps {
-  mobile: boolean;
-}
-
 export default function CheckoutAndReviewBox({
   mobile,
-}: CheckoutAndReviewBoxProps) {
+}: Library.CheckoutAndReviewBoxProps) {
   function buttonRender() {
     if (isAuthenticated) {
       if (!isCheckedOut && currentLoansCount < 5) {
